@@ -47,6 +47,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
   carousel_slider: ^4.2.1
+  swipable_stack: ^2.0.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -66,6 +67,9 @@ flutter:
      - assets/Ittadakimasu____Cessa_Lafaliqa-removebg-preview.png
      - assets/dal-paratha.png
      - assets/chicken.png
+     - assets/avo.gif
+     - assets/shopimage.png
+     - assets/prettypretty.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
