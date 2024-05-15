@@ -9,21 +9,10 @@ class _LoginPage extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.orange[200],
-        body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextFormField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    //borderRadius: BorderRadius.circular(10.0),
-                    //borderSide: const BorderSide(width: 15,style: BorderStyle.solid,color: Colors.lightBlue)
-                  ),
-                ),
-              )
-            ],
-          ),
-        ));
+        backgroundColor: Colors.orange[100],
+        body: Center(
+          child: Text("hello"),
+        )
+    );
   }
 }

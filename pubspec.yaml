@@ -70,6 +70,9 @@ flutter:
      - assets/avo.gif
      - assets/shopimage.png
      - assets/prettypretty.jpg
+     - assets/kikki.png
+     - assets/head.png
+     - assets/murighanta.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
