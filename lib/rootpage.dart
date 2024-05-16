@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hunger/pages/homepage.dart';
 import 'package:hunger/pages/foodpage.dart';
+import 'package:hunger/pages/cartItemsPage.dart';
 
 class Root extends StatefulWidget {
   Root({super.key});
@@ -10,15 +11,13 @@ class Root extends StatefulWidget {
 
 class _Root extends State<Root> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    MyHomePage(title: 'Hunger'),
-    FoodPage(),
+  static final List<Widget> _widgetOptions = <Widget>[
+    const MyHomePage(title: 'Hunger'),
+    const FoodPage(),
     Text(
       'yo',
     ),
-    Text(
-      'yo',
-    ),
+    CartItems(),
     Text(
       'yo',
     ),
@@ -185,7 +184,7 @@ class _Root extends State<Root> {
               label: "Foods"),
           BottomNavigationBarItem(
               backgroundColor: Colors.orange[300],
-              icon: Icon(Icons.dashboard_customize_outlined), label: "Hotels"),
+              icon: Icon(Icons.dashboard_customize_outlined), label: "custom"),
           BottomNavigationBarItem(
               backgroundColor: Colors.orange[300],
               icon: Icon(Icons.shopping_cart), label: "Basket"),
