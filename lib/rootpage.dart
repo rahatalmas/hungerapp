@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hunger/pages/homepage.dart';
 import 'package:hunger/pages/foodpage.dart';
 import 'package:hunger/pages/cartItemsPage.dart';
+import 'package:hunger/pages/profilePage.dart';
 
 class Root extends StatefulWidget {
   Root({super.key});
@@ -18,12 +19,7 @@ class _Root extends State<Root> {
       'yo',
     ),
     CartItems(),
-    Text(
-      'yo',
-    ),
-    Text(
-      'yo',
-    ),
+    ProfilePage(),
   ];
   changeIndex(int index){
     setState(() {
@@ -84,7 +80,7 @@ class _Root extends State<Root> {
                     children: [
                       const CircleAvatar(
                         radius: 35,
-                        backgroundImage: AssetImage("assets/prettypretty.jpg"),
+                        backgroundImage: AssetImage("assets/anya.jpg"),
                       ),
                       Builder(
                         builder: (context) {
