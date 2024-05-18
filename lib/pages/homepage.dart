@@ -199,7 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           child: Column(
                               children:[
-                                Image.asset("assets/dal-paratha.png",width:MediaQuery.of(context).size.width,height: 230,fit:BoxFit.cover,),
+                                Image.asset("assets/dal-paratha.png",width:MediaQuery.of(context).size.width,height: 250,fit:BoxFit.cover,),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [

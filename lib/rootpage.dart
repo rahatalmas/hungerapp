@@ -166,6 +166,7 @@ class _Root extends State<Root> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+
         selectedLabelStyle: TextStyle(
           color: Colors.brown
         ),
@@ -183,7 +184,22 @@ class _Root extends State<Root> {
               icon: Icon(Icons.dashboard_customize_outlined), label: "custom"),
           BottomNavigationBarItem(
               backgroundColor: Colors.orange[300],
-              icon: Icon(Icons.shopping_cart), label: "Basket"),
+              icon: Stack(
+                children: [
+                  Icon(Icons.shopping_cart),
+                  Positioned(
+                    child: Text("4",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),),
+                    right: 0,
+                    top: -10,
+                  )
+                ],
+              ),
+              label: "Basket",
+          ),
           BottomNavigationBarItem(
               backgroundColor: Colors.orange[300],
               icon: Icon(Icons.person), label: "profile")

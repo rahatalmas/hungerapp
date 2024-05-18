@@ -2,9 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:hunger/pages/components/foodList.dart';
 import 'package:hunger/rootpage.dart';
 import 'package:hunger/pages/loginpage.dart';
+import 'package:hunger/globalStates/cartItemProvider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+     MultiProvider(
+         providers:[
+           ChangeNotifierProvider(create: (context)=>CartItemProvider()),
+         ],
+       child: const MyApp(),
+     ),
+  );
 }
 
 class MyApp extends StatelessWidget {
