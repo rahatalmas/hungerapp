@@ -4,6 +4,7 @@ import 'package:hunger/rootpage.dart';
 import 'package:hunger/pages/loginpage.dart';
 import 'package:hunger/globalStates/cartItemProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:hunger/pages/foodDetails.dart';
 
 void main() {
   runApp(
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
                     if(snapshot.hasData){
                       return Root();
                     }
-                    return Root();
+                    return const LoginPage();
                   }
               );
             },

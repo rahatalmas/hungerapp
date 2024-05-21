@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:hunger/dataModels/userModel.dart';
 
 Future<UserLoginInfoModel> userLogin(user_name,user_password) async{
-  String url = "http://192.168.100.117:5000/user/login";
+  String url = "http://192.168.81.175:5000/user/login";
   final response = await http.post(
       Uri.parse(url),
       headers:<String,String>{

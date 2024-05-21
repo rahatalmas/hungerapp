@@ -3,6 +3,7 @@ import 'package:hunger/apiControllers/getfoods.dart';
 import 'package:hunger/dataModels/cartItemModel.dart';
 import 'package:hunger/dataModels/foodModel.dart';
 import 'package:hunger/globalStates/cartItemProvider.dart';
+import 'package:hunger/pages/foodDetails.dart';
 import 'package:provider/provider.dart';
 
 class FoodList extends StatefulWidget {
@@ -159,7 +160,12 @@ class _FoodList extends State<FoodList> {
                         ],
                       ),
                     onTap: (){
-                      print("food card");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context)=>FoodDetails(data: snapshot.data![index],)
+                        )
+                      );
                     },
                   );
                 }).reversed.toList(),
