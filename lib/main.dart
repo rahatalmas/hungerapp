@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hunger/pages/components/foodList.dart';
+import 'package:hunger/globalStates/LoginInfoProvider.dart';
 import 'package:hunger/rootpage.dart';
 import 'package:hunger/pages/loginpage.dart';
 import 'package:hunger/globalStates/cartItemProvider.dart';
@@ -9,6 +9,7 @@ void main() {
   runApp(
      MultiProvider(
          providers:[
+           ChangeNotifierProvider(create: (context)=>LoginInfoProvider()),
            ChangeNotifierProvider(create: (context)=>CartItemProvider()),
          ],
        child: const MyApp(),
@@ -20,7 +21,6 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    bool login = true;
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
@@ -28,9 +28,21 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: login?Root():LoginPage()
+        home: Consumer<LoginInfoProvider>(
+          builder: (context,user,child){
+              return FutureBuilder(
+                  future:user.loginInfo ,
+                  builder:(context,snapshot){
+                    if(snapshot.hasData){
+                      return Root();
+                    }
+                    return Root();
+                  }
+              );
+            },
+          )
+        );
       // login?Root():LoginPage()
-    );
   }
 }
 

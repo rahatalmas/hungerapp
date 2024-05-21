@@ -1,7 +1,3 @@
-import 'package:hunger/dataModels/foodModel.dart';
-import 'package:hunger/pages/components/foodList.dart';
-import 'dart:convert';
-
 class FoodModel {
   final int foodId;
   final String foodName;

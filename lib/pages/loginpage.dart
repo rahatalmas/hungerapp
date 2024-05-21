@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:hunger/apiControllers/login.dart';
+import 'package:hunger/dataModels/userModel.dart';
+import 'package:hunger/globalStates/LoginInfoProvider.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
   @override
   State<LoginPage> createState() => _LoginPage();
 }
+
 
 class _LoginPage extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -16,17 +19,21 @@ class _LoginPage extends State<LoginPage> {
 
   String user_name = "";
   String user_password = "";
-  void _form_Submit_controller(){
+  late Future <UserLoginInfoModel> loginInfo;
+
+  Future <UserLoginInfoModel> _form_Submit_controller(){
     if(_formKey.currentState!.validate()){
       setState(() {
         user_name = user_name_controller.text;
         user_password = user_password_controller.text;
       });
       print(user_name);
+      loginInfo = userLogin(user_name, user_password);
       user_name_controller.clear();
       user_password_controller.clear();
       FocusScope.of(context).unfocus();
     }
+    return loginInfo;
   }
   @override
   Widget build(BuildContext context) {
@@ -152,18 +159,25 @@ class _LoginPage extends State<LoginPage> {
                         //),
                         color: Colors.brown[500],
                         borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child:InkWell(
-                      child: const Center(
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
-                        ),
-                      ),
-                      onTap:_form_Submit_controller,
-                    ),
+                    child:Consumer<LoginInfoProvider>(
+                      builder: (context,user,child){
+                        return InkWell(
+                          child: const Center(
+                            child: Text(
+                              "Login",
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          onTap:(){
+                            loginInfo = _form_Submit_controller();
+                            user.setLoginInfo(loginInfo);
+                          },
+                        );
+                      },
+                    )
                   ),
                   SizedBox(
                     height: 10,
@@ -183,10 +197,11 @@ class _LoginPage extends State<LoginPage> {
                               color: Colors.green[700],
                               fontSize: 17,
                               fontWeight: FontWeight.w500
-                          ),),
+                          ),
+                        ),
                       )
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

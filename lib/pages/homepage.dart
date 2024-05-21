@@ -186,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children:List.generate(5, (index) {
                     final cardOffset = index * 7.0;
                     final cardOffsetX = index * 1.0;
-                    final cardScale = 1 - (index / 5.0);
+                    //final cardScale = 1 - (index / 5.0);
                     return Transform.translate(
                       offset: Offset(cardOffsetX,cardOffset),
                       child: Container(

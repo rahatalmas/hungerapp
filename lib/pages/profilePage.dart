@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hunger/globalStates/LoginInfoProvider.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget{
   ProfilePage({super.key});
@@ -14,6 +16,17 @@ class _ProfilePage extends State<ProfilePage>{
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Consumer<LoginInfoProvider>(
+              builder: (context,user,child){
+                print(user.loginInfo);
+                return FutureBuilder(
+                    future:
+                    user.loginInfo,
+                    builder:(context,snapshot){
+                      return Text(snapshot.data?.accessToken ?? 'Access Token Not Available');
+                    });
+              },
+            ),
             Container(
               padding: EdgeInsets.all(10),
               margin: EdgeInsets.all(10),
