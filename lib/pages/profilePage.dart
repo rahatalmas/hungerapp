@@ -18,10 +18,8 @@ class _ProfilePage extends State<ProfilePage>{
           children: [
             Consumer<LoginInfoProvider>(
               builder: (context,user,child){
-                print(user.loginInfo);
                 return FutureBuilder(
-                    future:
-                    user.loginInfo,
+                    future:user.loginInfo,
                     builder:(context,snapshot){
                       return Text(snapshot.data?.accessToken ?? 'Access Token Not Available');
                     });

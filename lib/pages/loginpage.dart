@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hunger/apiControllers/login.dart';
@@ -27,7 +29,6 @@ class _LoginPage extends State<LoginPage> {
         user_name = user_name_controller.text;
         user_password = user_password_controller.text;
       });
-      print(user_name);
       loginInfo = userLogin(user_name, user_password);
       user_name_controller.clear();
       user_password_controller.clear();
@@ -112,8 +113,9 @@ class _LoginPage extends State<LoginPage> {
                   ),
                   SizedBox(height: 15,),
                   TextFormField(
+                    obscureText: true,
                     decoration: const InputDecoration(
-                      label: Text("Password"),
+                      label: Text("User Password"),
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -141,10 +143,9 @@ class _LoginPage extends State<LoginPage> {
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                     ),
                     controller: user_password_controller,
-                    obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
+                        return 'Please enter your password';
                       }
                       return null;
                     },

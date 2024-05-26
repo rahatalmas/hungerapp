@@ -15,7 +15,6 @@ Future<UserLoginInfoModel> userLogin(user_name,user_password) async{
       })
   );
   if(response.statusCode == 200){
-    print("login successful");
     return UserLoginInfoModel.formJson(jsonDecode(response.body));
   }
   throw Exception('login failed');

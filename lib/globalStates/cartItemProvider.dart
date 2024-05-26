@@ -1,4 +1,3 @@
-
 import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:hunger/dataModels/cartItemModel.dart';
@@ -25,5 +24,4 @@ class CartItemProvider extends ChangeNotifier{
     }
     notifyListeners();
   }
-
 }

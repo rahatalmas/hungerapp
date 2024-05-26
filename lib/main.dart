@@ -31,17 +31,19 @@ class MyApp extends StatelessWidget {
         ),
         home: Consumer<LoginInfoProvider>(
           builder: (context,user,child){
-              return FutureBuilder(
-                  future:user.loginInfo ,
-                  builder:(context,snapshot){
-                    if(snapshot.hasData){
+            return FutureBuilder(
+                future: user.loginInfo,
+                builder: (context,snapshot){
+                  if(snapshot.hasData){
                       return Root();
-                    }
+                  }else{
                     return const LoginPage();
                   }
-              );
-            },
-          )
+                }
+            );
+          },
+        )
+
         );
       // login?Root():LoginPage()
   }
@@ -50,6 +52,32 @@ class MyApp extends StatelessWidget {
 
 
 /*
+
+ FutureBuilder(
+                future:user.userLoginInfo,
+                builder:(context,snapshot){
+                  print(snapshot.hasData);
+                  if(snapshot.hasData){
+                    return Root();
+                  }else {
+                    return const LoginPage();
+                  }
+                }
+            );
+
+Consumer<LoginInfoProvider>(
+          builder: (context,user,child){
+              return FutureBuilder(
+                  future:user.userLoginInfo ,
+                  builder:(context,snapshot){
+                    if(snapshot.hasData){
+                      return Root();
+                    }
+                    return const LoginPage();
+                  }
+              );
+            },
+            )
 
        CarouselSlider(
                 options: CarouselOptions(
