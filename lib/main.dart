@@ -24,14 +24,39 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Hunger',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
         home: Consumer<LoginInfoProvider>(
           builder: (context,user,child){
-            return FutureBuilder(
+            print(user.loginInfo);
+            if(user.loginInfo != null){
+              return FutureBuilder(
+                  future: user.loginInfo,
+                  builder: (context,snapshot){
+                if(snapshot.hasData){
+                  return Root();
+                }else{
+                  return const LoginPage();
+                }
+              });
+            }else{
+              return const LoginPage();
+            }
+          },
+        )
+
+        );
+  }
+}
+
+
+
+/*
+
+FutureBuilder(
                 future: user.loginInfo,
                 builder: (context,snapshot){
                   if(snapshot.hasData){
@@ -40,18 +65,6 @@ class MyApp extends StatelessWidget {
                     return const LoginPage();
                   }
                 }
-            );
-          },
-        )
-
-        );
-      // login?Root():LoginPage()
-  }
-}
-
-
-
-/*
 
  FutureBuilder(
                 future:user.userLoginInfo,

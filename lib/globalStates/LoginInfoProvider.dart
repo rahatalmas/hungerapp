@@ -7,5 +7,9 @@ class LoginInfoProvider extends ChangeNotifier {
     _loginInfo = info;
     notifyListeners();
   }
+  void unsetLoginInfo(){
+    _loginInfo = null;
+    notifyListeners();
+  }
   Future<UserLoginInfoModel>? get loginInfo => _loginInfo;
 }
