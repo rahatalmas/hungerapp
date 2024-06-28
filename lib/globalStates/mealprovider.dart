@@ -10,7 +10,6 @@ class MealItemProvider extends ChangeNotifier{
   int get mealItemsLength => mealItems.length;
 
   void addCartItem(CartItemModel item){
-    print(item);
     mealItems.add(item);
     notifyListeners();
   }
@@ -18,7 +17,6 @@ class MealItemProvider extends ChangeNotifier{
     void addQuantity(int index){
     mealItems[index].quantity+=1;
     notifyListeners();
-    //print('update');
   }
   void subQuantity(int index){
     if(mealItems[index].quantity>1) {

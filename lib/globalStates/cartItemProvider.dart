@@ -10,18 +10,42 @@ class CartItemProvider extends ChangeNotifier{
   int get cartLength => cartItems.length;
 
   void addCartItem(CartItemModel item){
-    cartItems.add(item);
+    
+    bool found = false;
+    for (int i = 0; i < cartItems.length; i++) {
+      if (cartItems[i].food_model.foodName == item.food_model.foodName && cartItems[i].food_model.foodProviderId == item.food_model.foodProviderId) {
+        cartItems[i].quantity += item.quantity;
+        found = true;
+        break;
+      }
+    }
+    if(!found){
+       cartItems.add(item);
+    }
     notifyListeners();
   }
   void addQuantity(int index){
     cartItems[index].quantity+=1;
     notifyListeners();
-    //print('update');
   }
   void subQuantity(int index){
     if(cartItems[index].quantity>1) {
       cartItems[index].quantity -= 1;
     }
     notifyListeners();
+  }
+  double getTotalPrice() {
+    double totalPrice = 0.0;
+    for (var item in cartItems) {
+      totalPrice += item.quantity * item.food_model.foodPrice;
+    }
+    return totalPrice;
+  }
+  int totalItem(){
+     int totalItems = 0;
+    for (var item in cartItems) {
+      totalItems += item.quantity;
+    }
+    return totalItems;
   }
 }
