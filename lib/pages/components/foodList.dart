@@ -132,7 +132,9 @@ class _FoodList extends State<FoodList> {
                                                           food_model: snapshot.data![index],
                                                           userId: 5,
                                                           quantity: 1,
-                                                          category: "Breakfast");
+                                                          category: "Breakfast",
+                                                          date: DateTime.now(),
+                                                        );
                                                       cartList.addCartItem(item);
                                                     },
                                                   );

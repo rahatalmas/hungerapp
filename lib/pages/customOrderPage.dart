@@ -34,7 +34,9 @@ class _CustomOrderPage extends State<CustomOrderPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.orange[100],
-        body: SingleChildScrollView(
+        body: Consumer<MealItemProvider>(
+                              builder: (context,item,child){
+                                return SingleChildScrollView(
             child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Column(
@@ -46,7 +48,7 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                         color: Colors.orange[200],
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: Stack(
+                      child:  Stack(
                         children: [
                           Positioned(
                             child: Column(
@@ -58,13 +60,21 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.brown[800])),
-                                Text("Pick Date &",
+                                Text("Total ${item.mealItemsLength}",
                                     style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.brown[800])),
-                                Text("Choose your Food & Meal Time",
+                                Text("Selected Days: ${
+                                     item.numOfUniqueDays()
+                                }",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.brown[800])),
+                                Text("Total Coast: ${
+                                     item.getTotalPrice()
+                                }",
                                     style: TextStyle(
                                         fontSize: 18, color: Colors.brown[800]))
+                                
                               ],
                             ),
                           ),
@@ -77,7 +87,11 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                             ),
                           ),
                         ],
-                      ),
+                      )
+                              
+                            
+                      
+                      
                     ),
                     SizedBox(
                       height: 15,
@@ -153,7 +167,7 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                     builder: (BuildContext context) {
                                       return Dialog(
                                         backgroundColor: Colors.orange[200],
-                                        child: CustomOrderFoodsList(),
+                                        child: CustomOrderFoodsList(mealType: mealType,date: selectedDate,),
                                       );
                                     });
                               },
@@ -178,6 +192,7 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                           return ListView.builder(
                               itemCount: cartList.mealItemsLength,
                               itemBuilder: (context, index) {
+                                //meal card
                                 return Container(
                           width: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.all(10),
@@ -212,6 +227,19 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                             fontSize: 15),
                                       ),
                                       Text(cartList.mealItems[index].food_model.foodProvider.hotelName,
+                                          style: TextStyle(
+                                              color: Colors.brown[700],
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 13)),
+                                              Text(
+                                                "MealType: ${cartList.mealItems[index].category}",
+                          
+                                              
+                                          style: TextStyle(
+                                              color: Colors.brown[700],
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 13)),
+                                      Text("Date: ${cartList.mealItems[index].date.day.toString()}",
                                           style: TextStyle(
                                               color: Colors.brown[700],
                                               fontWeight: FontWeight.w500,
@@ -311,7 +339,7 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                 decoration: BoxDecoration(
                                     color: Colors.green,
                                     borderRadius: BorderRadius.circular(10)),
-                                child: Row(
+                                child:const Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -332,6 +360,9 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                         ),
                         Expanded(
                           child: InkWell(
+                            onTap: (){
+                              item.resetList();
+                            },
                             child: Container(
                                 alignment: Alignment.center,
                                 padding: EdgeInsets.all(15),
@@ -361,6 +392,6 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                       ],
                     )
                   ],
-                ))));
+                )));}));
   }
 }

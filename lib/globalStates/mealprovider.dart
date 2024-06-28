@@ -26,4 +26,23 @@ class MealItemProvider extends ChangeNotifier{
     }
     notifyListeners();
   }
+  int numOfUniqueDays() {
+    Set<int> uniqueDays = {};
+    for (var item in mealItems) {
+      uniqueDays.add(item.date.day);
+    }
+    return uniqueDays.length;
+  }
+   double getTotalPrice() {
+    double totalPrice = 0.0;
+    for (var item in mealItems) {
+      totalPrice += item.quantity * item.food_model.foodPrice;
+    }
+    return totalPrice;
+  }
+  void resetList(){
+    mealItems.clear();
+    notifyListeners();
+  }
+
 }

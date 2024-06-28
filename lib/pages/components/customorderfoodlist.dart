@@ -6,7 +6,10 @@ import 'package:hunger/globalStates/mealprovider.dart';
 import 'package:provider/provider.dart';
 
 class CustomOrderFoodsList extends StatefulWidget {
-  const CustomOrderFoodsList({super.key});
+  CustomOrderFoodsList({super.key, this.mealType,required this.date});
+  String? mealType;
+  DateTime date;
+
   @override
   State<CustomOrderFoodsList> createState() => _CustomOrderFoodsList();
 }
@@ -47,7 +50,8 @@ class _CustomOrderFoodsList extends State<CustomOrderFoodsList> {
                               food_model: snapshot.data![index],
                               userId: 1,
                               quantity: 1,
-                              category: "Breakfast");
+                              category: widget.mealType,
+                              date: widget.date);
                               cartItem.addCartItem(item);
                           Navigator.of(context).pop();
                         },
