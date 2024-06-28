@@ -78,12 +78,12 @@ flutter:
      - assets/head.png
      - assets/murighanta.png
      - assets/login_cc.png
-     - assets/download (1).jpg
      - assets/dodle.jpg
      - assets/soup.png
      - assets/pizza.png
      - assets/anya.jpg
-
+     - assets/bg.jpg
+     - assets/bg1.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

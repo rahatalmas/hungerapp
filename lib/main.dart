@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hunger/globalStates/LoginInfoProvider.dart';
+import 'package:hunger/globalStates/mealprovider.dart';
 import 'package:hunger/rootpage.dart';
 import 'package:hunger/pages/loginpage.dart';
 import 'package:hunger/globalStates/cartItemProvider.dart';
@@ -12,6 +13,7 @@ void main() {
          providers:[
            ChangeNotifierProvider(create: (context)=>LoginInfoProvider()),
            ChangeNotifierProvider(create: (context)=>CartItemProvider()),
+           ChangeNotifierProvider(create: (context)=>MealItemProvider()),
          ],
        child: const MyApp(),
      ),
@@ -39,11 +41,11 @@ class MyApp extends StatelessWidget {
                 if(snapshot.hasData){
                   return Root();
                 }else{
-                  return const LoginPage();
+                  return LoginPage();
                 }
               });
             }else{
-              return const LoginPage();
+              return LoginPage();
             }
           },
         )

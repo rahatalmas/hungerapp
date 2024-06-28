@@ -1,0 +1,366 @@
+import 'package:flutter/material.dart';
+import 'package:hunger/globalStates/mealprovider.dart';
+import 'package:hunger/pages/components/customorderfoodlist.dart';
+import 'package:provider/provider.dart';
+
+class CustomOrderPage extends StatefulWidget {
+  const CustomOrderPage({super.key});
+  @override
+  State<CustomOrderPage> createState() => _CustomOrderPage();
+}
+
+class _CustomOrderPage extends State<CustomOrderPage> {
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
+  String? mealType = "BreakFast";
+
+  bool showFood = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.orange[100],
+        body: SingleChildScrollView(
+            child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Colors.orange[200],
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Meal Planner",
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.brown[800])),
+                                Text("Pick Date &",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.brown[800])),
+                                Text("Choose your Food & Meal Time",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.brown[800]))
+                              ],
+                            ),
+                          ),
+                          Positioned(
+                            right: 0,
+                            child: Image.asset(
+                              "assets/pizza.png",
+                              width: 75,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Color.fromARGB(255, 45, 25, 25),
+                                width: 2),
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.orange[200]),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                InkWell(
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.calendar_today),
+                                      Text(
+                                          "Date: ${selectedDate.day.toString()}"),
+                                    ],
+                                  ),
+                                  onTap: () => _selectDate(context),
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Row(
+                                  children: [
+                                    DropdownButton(
+                                      value: mealType,
+                                      items: <String>[
+                                        'BreakFast',
+                                        'Lunch',
+                                        'Dinner',
+                                      ].map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                        return DropdownMenuItem<String>(
+                                            value: value, child: Text(value));
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        setState(() => mealType = value);
+                                      },
+                                      underline: SizedBox(
+                                        height: 0,
+                                        width: 0,
+                                      ),
+                                      alignment: Alignment.center,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.brown[800]),
+                                      dropdownColor: Colors.orange[100],
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            InkWell(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.lunch_dining),
+                                  Text("Select Food"),
+                                ],
+                              ),
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Dialog(
+                                        backgroundColor: Colors.orange[200],
+                                        child: CustomOrderFoodsList(),
+                                      );
+                                    });
+                              },
+                            )
+                          ],
+                        )),
+                    SizedBox(
+                      height: 10,
+                    ),
+
+                    //items
+                    Container(
+                      height: MediaQuery.of(context).size.height / 2 - 30,
+                      width: MediaQuery.of(context).size.width,
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: Colors.orange[200],
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Consumer<MealItemProvider>(
+                        builder: (context, cartList, child) {
+                          return ListView.builder(
+                              itemCount: cartList.mealItemsLength,
+                              itemBuilder: (context, index) {
+                                return Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+                          decoration: BoxDecoration(
+                              color: Colors.orange[300],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: Image.network('${cartList.mealItems[index].food_model.foodPicture}',
+                                        height: 70,
+                                        width: 100,
+                                        fit: BoxFit.cover,
+                                        alignment: Alignment.center),
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        cartList.mealItems[index].food_model.foodName,
+                                        style: TextStyle(
+                                            color: Colors.brown[700],
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15),
+                                      ),
+                                      Text(cartList.mealItems[index].food_model.foodProvider.hotelName,
+                                          style: TextStyle(
+                                              color: Colors.brown[700],
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 13))
+                                    ],
+                                  )
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  InkWell(
+                                    onTap:(){
+                                      cartList.subQuantity(index);
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: Colors.orange[100]),
+                                      child: Icon(
+                                        Icons.remove,
+                                        size: 20,
+                                        weight: 500,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text('${cartList.mealItems[index].quantity}',
+                                      style: TextStyle(
+                                          color: Colors.brown[700],
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 20)),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  InkWell(
+                                    onTap:(){
+                                      cartList.addQuantity(index);
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: Colors.orange[100]),
+                                      child: Icon(
+                                        Icons.add,
+                                        size: 20,
+                                        weight: 500,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    "Price",
+                                    style: TextStyle(
+                                        color: Colors.brown[700],
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15),
+                                  ),
+                                  Text(
+                                    '${cartList.mealItems[index].food_model.foodPrice}x${cartList.mealItems[index].quantity}',
+                                    style: TextStyle(
+                                        color: Colors.brown[700],
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 15),
+                                  ),
+                                  Text(
+                                    '${cartList.mealItems[index].food_model.foodPrice*cartList.mealItems[index].quantity}',
+                                    style: TextStyle(
+                                        color: Colors.brown[700],
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 15),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ));
+                              });
+                        },
+                      ),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            child: Container(
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.all(15),
+                                margin: EdgeInsets.fromLTRB(0, 10, 5, 0),
+                                decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                    ),
+                                    Text(
+                                      "Order Proceed",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ],
+                                )),
+                          ),
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            child: Container(
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.all(15),
+                                margin: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                                decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                    ),
+                                    Text(
+                                      "Reset All",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ],
+                                )),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ))));
+  }
+}

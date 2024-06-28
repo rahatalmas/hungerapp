@@ -6,7 +6,7 @@ import 'package:hunger/dataModels/userModel.dart';
 
 Future<UserModel> getUser(String accessToken,int userId) async{
   String id = userId.toString();
-  String url = "http://192.168.189.175:5000/user/"+id;
+  String url = "http://192.168.243.213:5000/user/"+id;
   final response = await http.get(
       Uri.parse(url),
       headers: {

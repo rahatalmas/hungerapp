@@ -257,6 +257,9 @@ class _CartItems extends State<CartItems> {
                   ),
                 ),
               ),
+              onTap: (){
+                
+              },
             ),//list
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hunger/pages/customOrderPage.dart';
 import 'package:hunger/pages/homepage.dart';
 import 'package:hunger/pages/foodpage.dart';
 import 'package:hunger/pages/cartItemsPage.dart';
@@ -15,9 +16,7 @@ class _Root extends State<Root> {
   static final List<Widget> _widgetOptions = <Widget>[
     const MyHomePage(title: 'Hunger'),
     const FoodPage(),
-    Text(
-      'yo',
-    ),
+    CustomOrderPage(),
     CartItems(),
     ProfilePage(),
   ];

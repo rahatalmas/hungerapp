@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hunger/dataModels/foodModel.dart';
 import 'package:hunger/pages/components/foodList.dart';
-import 'package:hunger/pages/orderPage.dart';
+import 'package:hunger/pages/orderpage.dart';
 
 class FoodDetails extends StatefulWidget {
   FoodDetails({super.key, required this.data});

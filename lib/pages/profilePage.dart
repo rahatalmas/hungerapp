@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class ProfilePage extends StatefulWidget{
-  ProfilePage({super.key});
+  const ProfilePage({super.key});
   @override
   State<ProfilePage> createState() => _ProfilePage();
 }
