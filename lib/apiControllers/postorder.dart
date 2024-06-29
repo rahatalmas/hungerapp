@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:hunger/dataModels/orderModel.dart';
 
-Future<void> postOrder(Order order) async {
+Future<void> postOrder(OrderPost order) async {
   final url = Uri.parse("http://192.168.243.213:5000/order");
 
   try {

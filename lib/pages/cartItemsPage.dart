@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hunger/apiControllers/postorder.dart';
 import 'package:hunger/globalStates/LoginInfoProvider.dart';
 import 'package:hunger/globalStates/cartItemProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:hunger/apiControllers/getUser.dart';
+import 'package:hunger/dataModels/orderModel.dart';
 
 class CartItems extends StatefulWidget {
   CartItems({super.key});
@@ -279,7 +281,17 @@ class _CartItems extends State<CartItems> {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                onTap: () {},
+                onTap: () {
+                  for(int i=0;i<cartList.cartLength;i++){
+                     OrderPost order = OrderPost(                   
+                      orderedUserId: cartList.cartItems[i].userId, 
+                      orderedFoodId: cartList.cartItems[i].food_model.foodId, 
+                      quantity: cartList.cartItems[i].quantity,
+                      time: cartList.cartItems[i].date
+                      );
+                      postOrder(order);
+                  }
+                },
               ), //list
             ],
           );

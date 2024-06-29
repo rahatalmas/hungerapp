@@ -51,7 +51,6 @@ class _CustomOrderFoodsList extends State<CustomOrderFoodsList> {
                               food_model: snapshot.data![index],
                               userId: 1,
                               quantity: 1,
-                              category: widget.mealType,
                               date: widget.date);
                               cartItem.addCartItem(item);
                           Navigator.of(context).pop();

@@ -334,7 +334,7 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                                                             fontWeight: FontWeight.w500,
                                                                             fontSize: 13)),
                                                                     Text(
-                                                                        "MealType: ${cartList.mealItems[index].category}",
+                                                                        "MealType: ${cartList.mealItems[index].food_model.foodCategory}",
                                                                         style: TextStyle(
                                                                             color:
                                                                                 Colors.brown[700],
