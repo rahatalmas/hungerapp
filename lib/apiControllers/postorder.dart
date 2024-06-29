@@ -44,3 +44,25 @@ Future<List<Order>> fetchOrdersByUserId(int userId) async {
     return [];
   }
 }
+
+
+  Future<void> updateOrderStatus(int orderId,bool orderStatus) async {
+
+    final url = Uri.parse('http://192.168.243.213:5000/order/update');
+    final response = await http.put(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'orderId': orderId,
+        'orderStatus': orderStatus,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Order status updated successfully');
+    } else {
+      print('Failed to update order status');
+    }
+  }
