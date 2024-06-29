@@ -49,7 +49,6 @@ class _CustomOrderFoodsList extends State<CustomOrderFoodsList> {
                         onTap: () {
                           CartItemModel item = CartItemModel(
                               food_model: snapshot.data![index],
-                              userId: 1,
                               quantity: 1,
                               date: widget.date);
                               cartItem.addCartItem(item);

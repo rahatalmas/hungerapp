@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 class OrderPost {
   int orderedUserId;
   int orderedFoodId;
@@ -8,27 +11,23 @@ class OrderPost {
     required this.orderedUserId,
     required this.orderedFoodId,
     required this.quantity,
-    required this.time
+    required this.time,
   });
 
   Map<String, dynamic> toJson() => {
         'ordered_user_id': orderedUserId,
         'ordered_food_id': orderedFoodId,
         'quantity': quantity,
-        'order_time': time
+        'order_time': time.toIso8601String(), // Serialize DateTime to ISO 8601 string
       };
 }
-
-
-
-
 
 class Order {
   int orderId;
   int orderedUserId;
   int orderedFoodId;
   int quantity;
-  bool orderStatus = false;
+  bool orderStatus;
   DateTime time;
 
   Order({
@@ -37,7 +36,7 @@ class Order {
     required this.orderedFoodId,
     required this.quantity,
     required this.orderStatus,
-    required this.time
+    required this.time,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
@@ -46,7 +45,7 @@ class Order {
         orderedFoodId: json['ordered_food_id'],
         quantity: json['quantity'],
         orderStatus: json['order_status'],
-        time: json['order_time'],        
+        time: DateTime.parse(json['order_time']),
       );
 
   Map<String, dynamic> toJson() => {
@@ -55,7 +54,6 @@ class Order {
         'ordered_food_id': orderedFoodId,
         'quantity': quantity,
         'order_status': orderStatus,
-        'order_time': time,
-
+        'order_time': time.toIso8601String()
       };
 }
