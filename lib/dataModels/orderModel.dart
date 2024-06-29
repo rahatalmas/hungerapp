@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
 class OrderPost {
   int orderedUserId;
   int orderedFoodId;
@@ -18,7 +15,7 @@ class OrderPost {
         'ordered_user_id': orderedUserId,
         'ordered_food_id': orderedFoodId,
         'quantity': quantity,
-        'order_time': time.toIso8601String(), // Serialize DateTime to ISO 8601 string
+        'order_time': time.toIso8601String(),
       };
 }
 

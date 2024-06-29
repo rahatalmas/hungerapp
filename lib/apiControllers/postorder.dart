@@ -14,7 +14,7 @@ Future<void> postOrder(OrderPost order) async {
       body: jsonEncode(order.toJson()),
     );
 
-    if (response.statusCode == 200) {
+    if(response.statusCode == 201) {
       print('Order placed successfully');
     } else {
       print('Failed to place order: ${response.statusCode}');

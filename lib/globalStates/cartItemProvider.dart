@@ -48,4 +48,8 @@ class CartItemProvider extends ChangeNotifier{
     }
     return totalItems;
   }
+  void clearList(){
+    cartItems.clear();
+    notifyListeners();
+  }
 }
