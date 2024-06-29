@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hunger/apiControllers/postorder.dart';
+import 'package:hunger/dataModels/orderModel.dart';
 import 'package:hunger/globalStates/LoginInfoProvider.dart';
 import 'package:hunger/apiControllers/getUser.dart';
 import 'package:hunger/globalStates/mealprovider.dart';
@@ -476,6 +478,29 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                           children: [
                                             Expanded(
                                               child: InkWell(
+                                                onTap: () async {
+                                  for (int i = 0;
+                                      i < item.mealItems.length;
+                                      i++) {
+                                    OrderPost order = OrderPost(
+                                      orderedUserId: snapshot.data!.user_id,
+                                      orderedFoodId: item.mealItems[i].food_model.foodId,
+                                      quantity: item.mealItems[i].quantity,
+                                      time: item.mealItems[i].date,
+                                    );
+
+                                    try {
+                                      await postOrder(order);
+                                      item.resetList();
+                                      print(
+                                          'Order placed successfully for item $i');
+                                    } catch (e) {
+                                      print(
+                                          'Failed to place order for item $i: $e');
+                                    }
+                                    
+                                  }
+                                },
                                                 child: Container(
                                                     alignment: Alignment.center,
                                                     padding: EdgeInsets.all(15),

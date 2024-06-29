@@ -16,7 +16,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   UserModel? _userData;
-  
+
   List<Order> _orders = [];
   bool _isLoading = true;
 
@@ -28,7 +28,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _fetchData() async {
     try {
-      final loginInfoProvider = Provider.of<LoginInfoProvider>(context, listen: false);
+      final loginInfoProvider =
+          Provider.of<LoginInfoProvider>(context, listen: false);
       final loginInfo = await loginInfoProvider.loginInfo;
       print("loginInfo Profile page ${loginInfo}");
       if (loginInfo != null) {
@@ -65,35 +66,192 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    print(_orders.length);
     return Scaffold(
       backgroundColor: Colors.orange[100],
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : _userData != null
               ? SingleChildScrollView(
                   child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child:  Image.asset("assets/anya.jpg",height: 100,width: 100,fit: BoxFit.cover,),
+                                ),
+                                Text(_userData!.user_name),
+                                Text(_userData!.user_email)
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Column(children: [
+                                  Text("Pending"),
+                                  Text(
+                                    getPendingOrders().length.toString()
+                                  )
+                                ],),
+                                Column(children: [
+                                  Text("Received"),
+                                  Text(
+                                    getNotPendingOrders().length.toString()
+                                  )
+                                ],),
+                                Column(children: [
+                                  Text("Total"),
+                                  Text(
+                                    _orders.length.toString()
+                                  )
+                                ],)
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      //pending                       SizedBox(height: 10,),
+                      Row(children: [
+                        Text("Pending Orders")
+                      ],),
+                      SizedBox(height: 10,),
+                      Container(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: getPendingOrders().length,
+                          itemBuilder: (context,index){
+                             Order order = getPendingOrders()[index];
+                             return Container(
+                //height: 150,
+                padding: EdgeInsets.all(10),
+                margin: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: Colors.orange[200],
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child:ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        child: Image.network(order.food.foodPicture,width:MediaQuery.of(context).size.width,fit: BoxFit.cover,),
+                      )
+                      //
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(order.food.foodName,style: TextStyle(
+                              fontSize: 25,
+                              color: Colors.brown[500],
+                              letterSpacing: 1
+                          ),),
+                          Row(children: [
+                            Text(order.orderTime.day.toString(),style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.brown[400],
+                              letterSpacing: 0
+                          ),),
+                          Text(order.food.foodCategory)
+                          ],),
+                          Text(order.quantity.toString(),style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.brown[400],
+                              letterSpacing: 0
+                          ),),
+                          Text((order.quantity*order.food.foodPrice).toString(),style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.brown[400],
+                              letterSpacing: 0
+                          ),)
+                       ],
+                      ),
+                    )
+                  ],
+                ),
+              );
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 10,),
+                      Row(children: [
+                        Text("Received Orders")
+                      ],),
+                      SizedBox(height: 10,),
+                      Container(
+                        child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: getNotPendingOrders().length,
+                              itemBuilder: (context, index) {
+                                Order order = getPendingOrders()[index];
+                                return Text(order.food.foodName);
+                              },
+                            ),
+                      )
+                    ],
+                  )
+                )
+              : Center(
+                  child: Text('User data not available'),
+                ),
+    );
+  }
+}
+
+
+
+
+
+
+/**
+ * 
+ * Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.all(10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              _userData!.user_name,
-                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                            Row(
+                              children: [
+                                Text(
+                                  _userData!.user_name,
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  _userData!.user_email,
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                SizedBox(height: 20),
+                              ],
                             ),
-                            SizedBox(height: 10),
-                            Text(
-                              _userData!.user_email,
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            SizedBox(height: 20),
+                            
+                            
                             Text(
                               'Pending Orders:',
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             SizedBox(height: 10),
+
+
                             ListView.builder(
                               shrinkWrap: true,
                               itemCount: getPendingOrders().length,
@@ -101,14 +259,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Order order = getPendingOrders()[index];
                                 return ListTile(
                                   title: Text('Order ID: ${order.orderId}'),
-                                  subtitle: Text('Food ID: ${order.orderedFoodId}, Quantity: ${order.quantity}'),
+                                  subtitle: Text(
+                                      'Food ID: ${order.orderedFoodId}, Quantity: ${order.quantity}'),
                                 );
                               },
                             ),
                             SizedBox(height: 20),
                             Text(
                               'Not Pending Orders:',
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             SizedBox(height: 10),
                             ListView.builder(
@@ -118,7 +278,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Order order = getNotPendingOrders()[index];
                                 return ListTile(
                                   title: Text('Order ID: ${order.orderId}'),
-                                  subtitle: Text('Food ID: ${order.orderedFoodId}, Quantity: ${order.quantity}'),
+                                  subtitle: Text(
+                                      'Food ID: ${order.orderedFoodId}, Quantity: ${order.quantity}'),
                                 );
                               },
                             ),
@@ -127,10 +288,5 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ],
                   ),
-                )
-              : Center(
-                  child: Text('User data not available'),
-                ),
-    );
-  }
-}
+ * 
+ */

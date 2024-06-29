@@ -122,10 +122,8 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: EdgeInsets.all(10),
           child: SizedBox(
             height: 100,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
+            child: Row(children: [
+              Container(
                     height: 100,
                     width: 100,
                     padding: EdgeInsets.all(5),
@@ -143,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           scale: 6,
                         ),
                         Text(
-                          "Curry",
+                          "Breakfast",
                           style: TextStyle(
                               color: Colors.brown[700],
                               fontSize: 15,
@@ -151,10 +149,89 @@ class _MyHomePageState extends State<MyHomePage> {
                               letterSpacing: 1),
                         )
                       ],
-                    ));
-              },
-              itemCount: 5,
-            ),
+                    )),
+                    Container(
+                    height: 100,
+                    width: 100,
+                    padding: EdgeInsets.all(5),
+                    margin: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.orange[200],
+                    ),
+                    child: Column(
+                      //alignment: AlignmentDirectional.topCenter,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/avo.gif",
+                          scale: 6,
+                        ),
+                        Text(
+                          "Lunch",
+                          style: TextStyle(
+                              color: Colors.brown[700],
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 1),
+                        )
+                      ],
+                    )),
+                    Container(
+                    height: 100,
+                    width: 100,
+                    padding: EdgeInsets.all(5),
+                    margin: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.orange[200],
+                    ),
+                    child: Column(
+                      //alignment: AlignmentDirectional.topCenter,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/avo.gif",
+                          scale: 6,
+                        ),
+                        Text(
+                          "Dinner",
+                          style: TextStyle(
+                              color: Colors.brown[700],
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 1),
+                        )
+                      ],
+                    )),
+                    Container(
+                    height: 100,
+                    width: 100,
+                    padding: EdgeInsets.all(5),
+                    margin: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.orange[200],
+                    ),
+                    child: Column(
+                      //alignment: AlignmentDirectional.topCenter,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/avo.gif",
+                          scale: 6,
+                        ),
+                        Text(
+                          "FastFood",
+                          style: TextStyle(
+                              color: Colors.brown[700],
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 1),
+                        )
+                      ],
+                    ))
+            ],)
           ),
         ),
         Padding(
