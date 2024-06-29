@@ -14,7 +14,7 @@ Future<void> postOrder(OrderPost order) async {
       body: jsonEncode(order.toJson()),
     );
 
-    if(response.statusCode == 201) {
+    if (response.statusCode == 201) {
       print('Order placed successfully');
     } else {
       print('Failed to place order: ${response.statusCode}');
@@ -24,45 +24,39 @@ Future<void> postOrder(OrderPost order) async {
   }
 }
 
-
 Future<List<Order>> fetchOrdersByUserId(int userId) async {
   final url = Uri.parse('http://192.168.243.213:5000/order/$userId');
 
-  try {
-    final response = await http.get(url);
+  final response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      Iterable jsonResponse = jsonDecode(response.body);
-      List<Order> orders = jsonResponse.map((order) => Order.fromJson(order)).toList();
-      return orders;
-    } else {
-      print('Failed to fetch orders: ${response.statusCode}');
-      return [];
-    }
-  } catch (e) {
-    print('Exception occurred while fetching orders: $e');
-    return [];
+  if(response.statusCode == 200){
+    print("null check"+ response.body != null && response.body.isNotEmpty);
+    List<dynamic> jsonData = jsonDecode(response.body);
+    print("orders json data ${jsonData}");
+    List<Order> orders = jsonData.map((json)=>Order.fromJson(json)).toList();
+    print("orders api call ${orders}");
+    return orders;
+  } else {
+    throw Exception('Failed to load orders');
   }
 }
 
-
-  Future<void> updateOrderStatus(int orderId,bool orderStatus) async {
-
-    final url = Uri.parse('http://192.168.243.213:5000/order/update');
-    final response = await http.put(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, dynamic>{
-        'orderId': orderId,
-        'orderStatus': orderStatus,
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      print('Order status updated successfully');
-    } else {
-      print('Failed to update order status');
-    }
+Future<void> updateOrderStatus(int orderId, bool orderStatus) async {
+  final url = Uri.parse('http://192.168.243.213:5000/order/update');
+  final response = await http.put(
+    url,
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, dynamic>{
+      'orderId': orderId,
+      'orderStatus': orderStatus,
+    }),
+  );
+   
+  if (response.statusCode == 200) {
+    print('Order status updated successfully');
+  } else {
+    print('Failed to update order status');
   }
+}

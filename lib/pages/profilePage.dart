@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hunger/apiControllers/getUser.dart';
-import 'package:hunger/apiControllers/postorder.dart'; // Import necessary API controllers
+import 'package:hunger/apiControllers/postorder.dart';
 import 'package:hunger/dataModels/userModel.dart';
 import 'package:hunger/dataModels/orderModel.dart';
 import 'package:hunger/globalStates/LoginInfoProvider.dart';
@@ -16,6 +16,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   UserModel? _userData;
+  
   List<Order> _orders = [];
   bool _isLoading = true;
 
@@ -29,10 +30,13 @@ class _ProfilePageState extends State<ProfilePage> {
     try {
       final loginInfoProvider = Provider.of<LoginInfoProvider>(context, listen: false);
       final loginInfo = await loginInfoProvider.loginInfo;
+      print("loginInfo Profile page ${loginInfo}");
       if (loginInfo != null) {
         Map<String, dynamic> token = JwtDecoder.decode(loginInfo.accessToken);
         UserModel user = await getUser(loginInfo.accessToken, token["user_id"]);
+        print("profile page user ${user.user_id}");
         List<Order> orders = await fetchOrdersByUserId(user.user_id);
+        print("orders ${orders}");
         setState(() {
           _userData = user;
           _orders = orders;
