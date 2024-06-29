@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hunger/globalStates/LoginInfoProvider.dart';
 import 'package:hunger/globalStates/cartItemProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:hunger/apiControllers/getUser.dart';
 
 class CartItems extends StatefulWidget {
   CartItems({super.key});
@@ -99,13 +102,30 @@ class _CartItems extends State<CartItems> {
                         SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          "Anya Forger",
-                          style: TextStyle(
-                              color: Colors.brown[800],
-                              letterSpacing: 2,
-                              fontSize: 16),
-                        ),
+                        Consumer<LoginInfoProvider>(
+                            builder: (context, user, child) {
+                          return FutureBuilder(
+                              future: user.loginInfo,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  Map<String, dynamic> token =
+                                      JwtDecoder.decode(
+                                          snapshot.data!.accessToken);
+                                  return FutureBuilder(
+                                      future: getUser(
+                                          snapshot.data!.accessToken,
+                                          token["user_id"]),
+                                      builder: (context, snapshot) {
+                                        print(snapshot.hasData);
+                                        if (snapshot.hasData) {
+                                          return Text(snapshot.data!.user_name);
+                                        }
+                                        return Text("Invalid");
+                                      });
+                                }
+                                return Text("Invalid");
+                              });
+                        })
                       ],
                     )
                   ],

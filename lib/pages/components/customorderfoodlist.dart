@@ -6,9 +6,10 @@ import 'package:hunger/globalStates/mealprovider.dart';
 import 'package:provider/provider.dart';
 
 class CustomOrderFoodsList extends StatefulWidget {
-  CustomOrderFoodsList({super.key, this.mealType,required this.date});
+  CustomOrderFoodsList({super.key, this.mealType,required this.date,required this.userId});
   String? mealType;
   DateTime date;
+  int userId;
 
   @override
   State<CustomOrderFoodsList> createState() => _CustomOrderFoodsList();
