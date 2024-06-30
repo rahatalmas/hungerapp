@@ -175,7 +175,22 @@ class _ProfilePageState extends State<ProfilePage> {
                               fontSize: 14,
                               color: Colors.brown[400],
                               letterSpacing: 0
-                          ),)
+                          ),),
+                          InkWell(
+                            onTap: (){
+                              updateOrderStatus(order.orderId, true);
+                              _fetchData();
+                          },
+                        child: Container( 
+                          margin: EdgeInsets.symmetric(vertical: 5),
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.green[500],
+
+                          ),
+                          child: Text("Received"),
+                         ),
+                      ),
                        ],
                       ),
                     )
@@ -196,11 +211,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: getNotPendingOrders().length,
                               itemBuilder: (context, index) {
-                                Order order = getPendingOrders()[index];
+                                Order order = getNotPendingOrders()[index];
                                 return Text(order.food.foodName);
                               },
                             ),
-                      )
+                      ),
                     ],
                   )
                 )
@@ -210,83 +225,3 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
-
-
-
-
-
-
-/**
- * 
- * Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  _userData!.user_name,
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  _userData!.user_email,
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                SizedBox(height: 20),
-                              ],
-                            ),
-                            
-                            
-                            Text(
-                              'Pending Orders:',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(height: 10),
-
-
-                            ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: getPendingOrders().length,
-                              itemBuilder: (context, index) {
-                                Order order = getPendingOrders()[index];
-                                return ListTile(
-                                  title: Text('Order ID: ${order.orderId}'),
-                                  subtitle: Text(
-                                      'Food ID: ${order.orderedFoodId}, Quantity: ${order.quantity}'),
-                                );
-                              },
-                            ),
-                            SizedBox(height: 20),
-                            Text(
-                              'Not Pending Orders:',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(height: 10),
-                            ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: getNotPendingOrders().length,
-                              itemBuilder: (context, index) {
-                                Order order = getNotPendingOrders()[index];
-                                return ListTile(
-                                  title: Text('Order ID: ${order.orderId}'),
-                                  subtitle: Text(
-                                      'Food ID: ${order.orderedFoodId}, Quantity: ${order.quantity}'),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
- * 
- */

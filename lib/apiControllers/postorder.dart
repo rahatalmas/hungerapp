@@ -30,11 +30,8 @@ Future<List<Order>> fetchOrdersByUserId(int userId) async {
   final response = await http.get(url);
 
   if(response.statusCode == 200){
-    print("null check"+ response.body != null && response.body.isNotEmpty);
     List<dynamic> jsonData = jsonDecode(response.body);
-    print("orders json data ${jsonData}");
     List<Order> orders = jsonData.map((json)=>Order.fromJson(json)).toList();
-    print("orders api call ${orders}");
     return orders;
   } else {
     throw Exception('Failed to load orders');

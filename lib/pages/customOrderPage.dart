@@ -111,7 +111,8 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                                       width: 75,
                                                       fit: BoxFit.cover,
                                                     ),
-                                                    Text("Budget ${snapshot.data!.user_budget}")
+                                                    Text(
+                                                        "Budget ${snapshot.data!.user_budget}")
                                                   ],
                                                 )
                                               ],
@@ -165,7 +166,8 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                                               DropdownMenuItem<
                                                                   String>>((String
                                                               value) {
-                                                            return DropdownMenuItem<String>(
+                                                            return DropdownMenuItem<
+                                                                    String>(
                                                                 value: value,
                                                                 child: Text(
                                                                     value));
@@ -211,14 +213,14 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                                             backgroundColor:
                                                                 Colors.orange[
                                                                     200],
-                                                            child:
-                                                                CustomOrderFoodsList(
-                                                              mealType:
-                                                                  mealType,
-                                                              date:
-                                                                  selectedDate,
-                                                              userId:snapshot.data!.user_id
-                                                            ),
+                                                            child: CustomOrderFoodsList(
+                                                                mealType:
+                                                                    mealType,
+                                                                date:
+                                                                    selectedDate,
+                                                                userId: snapshot
+                                                                    .data!
+                                                                    .user_id),
                                                           );
                                                         });
                                                   },
@@ -479,28 +481,35 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                             Expanded(
                                               child: InkWell(
                                                 onTap: () async {
-                                  for (int i = 0;
-                                      i < item.mealItems.length;
-                                      i++) {
-                                    OrderPost order = OrderPost(
-                                      orderedUserId: snapshot.data!.user_id,
-                                      orderedFoodId: item.mealItems[i].food_model.foodId,
-                                      quantity: item.mealItems[i].quantity,
-                                      time: item.mealItems[i].date,
-                                    );
+                                                  for (int i = 0;
+                                                      i < item.mealItems.length;
+                                                      i++) {
+                                                    OrderPost order = OrderPost(
+                                                      orderedUserId: snapshot
+                                                          .data!.user_id,
+                                                      orderedFoodId: item
+                                                          .mealItems[i]
+                                                          .food_model
+                                                          .foodId,
+                                                      quantity: item
+                                                          .mealItems[i]
+                                                          .quantity,
+                                                      time: item
+                                                          .mealItems[i].date,
+                                                    );
 
-                                    try {
-                                      await postOrder(order);
-                                      item.resetList();
-                                      print(
-                                          'Order placed successfully for item $i');
-                                    } catch (e) {
-                                      print(
-                                          'Failed to place order for item $i: $e');
-                                    }
-                                    
-                                  }
-                                },
+                                                    try {
+                                                      await postOrder(order);
+                                                      print(
+                                                          'Order placed successfully for item $i');
+                                                    } catch (e) {
+                                                      print(
+                                                          'Failed to place order for item $i: $e');
+                                                    }
+                                                  }
+                                                  item.resetList();
+
+                                                },
                                                 child: Container(
                                                     alignment: Alignment.center,
                                                     padding: EdgeInsets.all(15),
