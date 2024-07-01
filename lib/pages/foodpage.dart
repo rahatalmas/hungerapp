@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hunger/pages/components/foodList.dart';
+import 'package:hunger/pages/customOrderPage.dart';
 class FoodPage extends StatefulWidget {
   const FoodPage({super.key});
   @override
@@ -45,6 +46,11 @@ class _FoodPage extends State<FoodPage> {
                               height: 10,
                             ),
                             InkWell(
+                              onTap: (){
+                                      Navigator.push(context,MaterialPageRoute(builder: (BuildContext context){
+                                          return CustomOrderPage();
+                                      }));
+                                },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 15, vertical: 10),

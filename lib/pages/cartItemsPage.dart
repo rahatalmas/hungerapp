@@ -323,8 +323,9 @@ class _CartItems extends State<CartItems> {
                                       print(
                                           'Failed to place order for item $i: $e');
                                     }
-                                    cartList.clearList();
                                   }
+                                    cartList.clearList();
+
                                 },
                               )
                             ]);

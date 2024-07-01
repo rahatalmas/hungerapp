@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hunger/pages/customOrderPage.dart';
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
@@ -59,6 +60,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                     height: 25,
                                   ),
                                   InkWell(
+                                    onTap: (){
+                                      Navigator.push(context,MaterialPageRoute(builder: (BuildContext context){
+                                          return CustomOrderPage();
+                                      }));
+                                    },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
                                       decoration: BoxDecoration(
@@ -122,7 +128,9 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: EdgeInsets.all(10),
           child: SizedBox(
             height: 100,
-            child: Row(children: [
+            child: ListView(
+              scrollDirection:Axis.horizontal,
+              children: [
               Container(
                     height: 100,
                     width: 100,

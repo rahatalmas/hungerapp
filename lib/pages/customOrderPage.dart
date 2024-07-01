@@ -21,8 +21,8 @@ class _CustomOrderPage extends State<CustomOrderPage> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime(2015, 8),
-      lastDate: DateTime(2101),
+      firstDate: DateTime(2024, DateTime.now().day),
+      lastDate: DateTime(2024, DateTime.now().day + 30 ),
     );
     if (picked != null && picked != selectedDate) {
       setState(() {
@@ -70,6 +70,8 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                                   BorderRadius.circular(15),
                                             ),
                                             child: Row(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Column(
                                                   mainAxisAlignment:
