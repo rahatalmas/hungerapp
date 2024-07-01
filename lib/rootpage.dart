@@ -186,15 +186,7 @@ class _Root extends State<Root> {
               icon: Stack(
                 children: [
                   Icon(Icons.shopping_cart),
-                  Positioned(
-                    child: Text("4",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),),
-                    right: 0,
-                    top: -10,
-                  )
+                  
                 ],
               ),
               label: "Basket",
