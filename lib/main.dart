@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hunger/globalStates/LoginInfoProvider.dart';
 import 'package:hunger/globalStates/mealprovider.dart';
+import 'package:hunger/globalStates/userAuthProvider.dart';
+import 'package:hunger/pages/registerPage.dart';
 import 'package:hunger/rootpage.dart';
 import 'package:hunger/pages/loginpage.dart';
 import 'package:hunger/globalStates/cartItemProvider.dart';
@@ -12,6 +14,7 @@ void main() {
      MultiProvider(
          providers:[
            ChangeNotifierProvider(create: (context)=>LoginInfoProvider()),
+           ChangeNotifierProvider(create: (context)=>UserAuthProvider()),
            ChangeNotifierProvider(create: (context)=>CartItemProvider()),
            ChangeNotifierProvider(create: (context)=>MealItemProvider()),
          ],
@@ -31,7 +34,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: Consumer<LoginInfoProvider>(
+        home:Consumer<LoginInfoProvider>(
           builder: (context,user,child){
             print(user.loginInfo);
             if(user.loginInfo != null){
@@ -53,6 +56,18 @@ class MyApp extends StatelessWidget {
         );
   }
 }
+
+
+/*
+version 1 protection
+
+
+
+*/
+
+
+ 
+
 
 
 

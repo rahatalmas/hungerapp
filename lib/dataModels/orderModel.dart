@@ -37,9 +37,6 @@ class FoodModel {
   }
 }
 
-
-
-
 class OrderPost {
   int orderedUserId;
   int orderedFoodId;

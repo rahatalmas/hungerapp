@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:hunger/apiControllers/login.dart';
 import 'package:hunger/dataModels/userModel.dart';
 import 'package:hunger/globalStates/LoginInfoProvider.dart';
+import 'package:hunger/globalStates/userAuthProvider.dart';
+import 'package:hunger/pages/registerPage.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -38,6 +40,7 @@ class _LoginPage extends State<LoginPage> {
   }
   @override
   Widget build(BuildContext context) {
+    final userAuthProvider = Provider.of<UserAuthProvider>(context);
     return Scaffold(
         backgroundColor: Colors.orange[100],
         body:SingleChildScrollView(
@@ -111,7 +114,9 @@ class _LoginPage extends State<LoginPage> {
                       return null;
                     },
                   ),
+                  
                   SizedBox(height: 15,),
+                  
                   TextFormField(
                     obscureText: true,
                     decoration: const InputDecoration(
@@ -173,8 +178,16 @@ class _LoginPage extends State<LoginPage> {
                             ),
                           ),
                           onTap:(){
-                            loginInfo = _form_Submit_controller();
-                            user.setLoginInfo(loginInfo);
+                            //loginInfo = _form_Submit_controller();
+                            //user.setLoginInfo(loginInfo);
+                            if(_formKey.currentState!.validate()){
+                              final loginRes = userAuthProvider.loginUser(user_name_controller.text, user_password_controller.text);
+                              loginRes.then((response){
+                                print(userAuthProvider.authData.message);
+                                print(userAuthProvider.authData.token);
+                                print(userAuthProvider.statusCode);
+                              });
+                            }
                           },
                         );
                       },
@@ -193,6 +206,11 @@ class _LoginPage extends State<LoginPage> {
                           fontWeight: FontWeight.w400
                       ),),
                       InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                              return RegisterPage();
+                            }));
+                        },
                         child: Text("SignUp",
                           style: TextStyle(
                               color: Colors.green[700],
