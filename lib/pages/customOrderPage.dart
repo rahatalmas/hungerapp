@@ -16,6 +16,8 @@ class CustomOrderPage extends StatefulWidget {
 
 class _CustomOrderPage extends State<CustomOrderPage> {
   DateTime selectedDate = DateTime.now();
+  String? mealType = "BreakFast";
+  bool showFood = false;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -31,34 +33,18 @@ class _CustomOrderPage extends State<CustomOrderPage> {
     }
   }
 
-  String? mealType = "BreakFast";
-
-  bool showFood = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.orange[100],
-        body: Consumer<LoginInfoProvider>(builder: (context, user, child) {
-          return FutureBuilder(
-              future: user.loginInfo,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  Map<String, dynamic> token =
-                      JwtDecoder.decode(snapshot.data!.accessToken);
-                  return FutureBuilder(
-                      future:
-                          getUser(snapshot.data!.accessToken, token["user_id"]),
-                      builder: (context, snapshot) {
-                        print(snapshot.hasData);
-                        if (snapshot.hasData) {
-                          return Consumer<MealItemProvider>(
-                              builder: (context, item, child) {
-                            return SingleChildScrollView(
+        body: 
+              SingleChildScrollView(
                                 child: Padding(
                                     padding: EdgeInsets.all(10),
                                     child: Column(
                                       children: [
+
+                                        //dashboard
                                         Container(
                                             padding: EdgeInsets.all(10),
                                             width: MediaQuery.of(context)
@@ -87,19 +73,19 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                                             color: Colors
                                                                 .brown[800])),
                                                     Text(
-                                                        "Total ${item.mealItemsLength}",
+                                                        "Total ",
                                                         style: TextStyle(
                                                             fontSize: 18,
                                                             color: Colors
                                                                 .brown[800])),
                                                     Text(
-                                                        "Selected Days: ${item.numOfUniqueDays()}",
+                                                        "Selected Days: ",
                                                         style: TextStyle(
                                                             fontSize: 18,
                                                             color: Colors
                                                                 .brown[800])),
                                                     Text(
-                                                        "Total Coast: ${item.getTotalPrice()}",
+                                                        "Total Coast: ",
                                                         style: TextStyle(
                                                             fontSize: 18,
                                                             color: Colors
@@ -114,14 +100,17 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                                       fit: BoxFit.cover,
                                                     ),
                                                     Text(
-                                                        "Budget ${snapshot.data!.user_budget}")
+                                                        "Budget ")
                                                   ],
                                                 )
                                               ],
                                             )),
-                                        SizedBox(
+                                        
+                                        const SizedBox(
                                           height: 15,
                                         ),
+                                        
+                                        //picker
                                         Container(
                                             padding: EdgeInsets.all(10),
                                             decoration: BoxDecoration(
@@ -209,39 +198,28 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                                   onTap: () {
                                                     showDialog(
                                                         context: context,
-                                                        builder: (BuildContext
-                                                            context) {
+                                                        builder: (BuildContext context) {
                                                           return Dialog(
-                                                            backgroundColor:
-                                                                Colors.orange[
-                                                                    200],
+                                                            backgroundColor: Colors.orange[200],
                                                             child: CustomOrderFoodsList(
-                                                                mealType:
-                                                                    mealType,
-                                                                date:
-                                                                    selectedDate,
-                                                                userId: snapshot
-                                                                    .data!
-                                                                    .user_id),
+                                                                mealType:mealType,
+                                                                date:selectedDate,
+                                                                userId: 1),
                                                           );
                                                         });
                                                   },
                                                 )
                                               ],
                                             )),
-                                        SizedBox(
+                                        
+                                        const SizedBox(
                                           height: 10,
                                         ),
 
                                         //items
                                         Container(
-                                          height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  2 -
-                                              30,
-                                          width:
-                                              MediaQuery.of(context).size.width,
+                                          height: MediaQuery.of(context).size.height / 2 - 30,
+                                          width: MediaQuery.of(context).size.width,
                                           alignment: Alignment.center,
                                           padding: EdgeInsets.all(10),
                                           decoration: BoxDecoration(
@@ -340,19 +318,21 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                                                             fontWeight: FontWeight.w500,
                                                                             fontSize: 13)),
                                                                     Text(
-                                                                        "MealType: ${cartList.mealItems[index].food_model.foodCategory}",
+                                                                      "MealType: ${cartList.mealItems[index].food_model.foodCategory}",
                                                                         style: TextStyle(
-                                                                            color:
-                                                                                Colors.brown[700],
+                                                                            color: Colors.brown[700],
                                                                             fontWeight: FontWeight.w500,
-                                                                            fontSize: 13)),
+                                                                            fontSize: 13
+                                                                          )
+                                                                    ),
                                                                     Text(
                                                                         "Date: ${cartList.mealItems[index].date.day.toString()}",
                                                                         style: TextStyle(
-                                                                            color:
-                                                                                Colors.brown[700],
+                                                                            color: Colors.brown[700],
                                                                             fontWeight: FontWeight.w500,
-                                                                            fontSize: 13))
+                                                                            fontSize: 13
+                                                                        )
+                                                                    )
                                                                   ],
                                                                 )
                                                               ],
@@ -367,9 +347,7 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                                                   },
                                                                   child:
                                                                       Container(
-                                                                    padding:
-                                                                        EdgeInsets
-                                                                            .all(5),
+                                                                    padding:EdgeInsets.all(5),
                                                                     decoration: BoxDecoration(
                                                                         borderRadius:
                                                                             BorderRadius.circular(
@@ -474,6 +452,8 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                             },
                                           ),
                                         ),
+                                        
+                                        //buttons
                                         Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
@@ -483,7 +463,7 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                             Expanded(
                                               child: InkWell(
                                                 onTap: () async {
-                                                  for (int i = 0;
+                                                  /*for (int i = 0;
                                                       i < item.mealItems.length;
                                                       i++) {
                                                     OrderPost order = OrderPost(
@@ -509,7 +489,7 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                                           'Failed to place order for item $i: $e');
                                                     }
                                                   }
-                                                  item.resetList();
+                                                  item.resetList();*/
 
                                                 },
                                                 child: Container(
@@ -551,7 +531,7 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                             Expanded(
                                               child: InkWell(
                                                 onTap: () {
-                                                  item.resetList();
+                                                  //item.resetList();
                                                 },
                                                 child: Container(
                                                     alignment: Alignment.center,
@@ -592,16 +572,8 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                           ],
                                         )
                                       ],
-                                    )));
-                          });
-                        } else {
-                          return Text("no data");
-                        }
-                      });
-                } else {
-                  return Text("No accesstoken");
-                }
-              });
-        }));
+                                    )))
+                         
+              );
   }
 }

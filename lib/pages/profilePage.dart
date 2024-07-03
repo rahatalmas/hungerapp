@@ -111,42 +111,23 @@ class _ProfilePageState extends State<ProfilePage>
                                           )),
                                 Text(_userData!.user_name),
                                 Text(_userData!.user_email),
-                                InkWell(
-                                  onTap: () {
-                                    handleLogout();
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 5),
-                                    decoration: const BoxDecoration(
-                                      color: Color.fromARGB(255, 235, 191, 111),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                    ),
-                                    child: const Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Logout",
-                                          style: const TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w500,
-                                              color: Color.fromARGB(
-                                                  255, 31, 29, 29)),
-                                        ), //SizedBox(width: 3,),
-                                      ],
-                                    ),
-                                  ),
-                                )
+                                
                               ],
                             ),
                           ),
                           Expanded(
                             flex: 1,
-                            child: Row(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [  
+                                Text(
+                                  "Budget "+_userData!.user_budget.toString()
+                                ),
+                                SizedBox(height: 10,),
+                                Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Column(
                                   children: [
@@ -175,6 +156,73 @@ class _ProfilePageState extends State<ProfilePage>
                                 )
                               ],
                             ),
+                                SizedBox(height: 10,),
+
+                                Row(
+                                  children: [
+                                  InkWell(
+                                  onTap: () {
+                                    handleLogout();
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 5),
+                                    decoration: const BoxDecoration(
+                                      color: Color.fromARGB(255, 235, 191, 111),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    ),
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Edit Profile",
+                                          style: const TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color.fromARGB(
+                                                  255, 31, 29, 29)),
+                                        ), //SizedBox(width: 3,),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 10,),
+                                InkWell(
+                                  onTap: () {
+                                    print("edit");
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 5),
+                                    decoration: const BoxDecoration(
+                                      color: Color.fromARGB(255, 235, 191, 111),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    ),
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Logout",
+                                          style: const TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color.fromARGB(
+                                                  255, 31, 29, 29)),
+                                        ), //SizedBox(width: 3,),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              
+                              
+                                ],)
+
+                              ],
+                            )
                           )
                         ],
                       ),
