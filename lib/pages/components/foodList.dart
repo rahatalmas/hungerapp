@@ -135,6 +135,13 @@ class _FoodList extends State<FoodList> {
                                                           date: DateTime.now(),
                                                         );
                                                       cartList.addCartItem(item);
+                                                      ScaffoldMessenger.of(context).showSnackBar(
+                                                        SnackBar(
+                                                          content: Text("${snapshot.data![index].foodName} Added To Cart",style: TextStyle(color: Colors.white),),
+                                                          backgroundColor: Colors.brown[800],
+                                                          duration: Duration.zero,
+                                                        )
+                                                        );
                                                     },
                                                   );
                                                 }

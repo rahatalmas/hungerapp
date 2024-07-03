@@ -80,10 +80,10 @@ class _ProfilePageState extends State<ProfilePage>
               ? SingleChildScrollView(
                   child: Column(
                   children: [
+                    SizedBox(height: 10,),
                     Container(
                       padding: EdgeInsets.all(10),
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      margin:EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           color: Colors.orange[200],
@@ -179,32 +179,62 @@ class _ProfilePageState extends State<ProfilePage>
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 10,),
                     Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10,vertical: 0),
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(  
+                        color: Colors.orange[200],   
+                        borderRadius: BorderRadius.circular(15)             
+                      ),
                       child:Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [                       
-                          InkWell(
+                          Expanded(
+                            child: InkWell(
                             onTap: (){
                               setState(() {
                                 tabView = 0;
                               });
                             },
-                            child: Text("Pending"),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                              Icon(Icons.pending),
+                              Text("Pending")
+                            ],),
                           ),
-                          InkWell(
+                          ),
+                          Container(
+                            height: 20,
+                            width: 7,
+                            decoration: BoxDecoration(  
+                              borderRadius: BorderRadius.circular(5), 
+                              color: Colors.orange
+                            ), 
+                          ),
+                          Expanded(
+                            child: InkWell(
                             onTap: (){
                               setState(() {
                                 tabView = 1;
                               });
                             },
-                            child: Text("Received"),
+                            child:const Row(
+                               mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                              Icon(Icons.receipt),
+                              Text("Received")
+                            ],),
+                          ),
                           )
                       ],
                     ),
                     ),
+                    SizedBox(height: 5,),
                     Container(
                       child: ListView.builder(
                       shrinkWrap: true,
