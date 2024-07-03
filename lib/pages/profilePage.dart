@@ -3,12 +3,10 @@ import 'package:hunger/apiControllers/getUser.dart';
 import 'package:hunger/apiControllers/postorder.dart';
 import 'package:hunger/dataModels/userModel.dart';
 import 'package:hunger/dataModels/orderModel.dart';
-import 'package:hunger/globalStates/LoginInfoProvider.dart';
 import 'package:hunger/globalStates/userAuthProvider.dart';
 import 'package:hunger/pages/components/orderCard.dart';
 import 'package:provider/provider.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -17,9 +15,10 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage>
+   {
   UserModel? _userData;
-
+  int tabView = 0;
   List<Order> _orders = [];
   bool _isLoading = true;
 
@@ -29,11 +28,10 @@ class _ProfilePageState extends State<ProfilePage> {
     fetchData();
   }
 
-  
   Future<void> fetchData() async {
     try {
       final loginInfoProvider =
-      Provider.of<UserAuthProvider>(context, listen: false);
+          Provider.of<UserAuthProvider>(context, listen: false);
       final loginInfo = loginInfoProvider.authData.token;
       if (loginInfo != null) {
         Map<String, dynamic> token = JwtDecoder.decode(loginInfo);
@@ -57,10 +55,10 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  void handleLogout(){
-      final loginInfoProvider =
-          Provider.of<UserAuthProvider>(context, listen: false);
-          loginInfoProvider.logOut(); 
+  void handleLogout() {
+    final loginInfoProvider =
+        Provider.of<UserAuthProvider>(context, listen: false);
+    loginInfoProvider.logOut();
   }
 
   List<Order> getPendingOrders() {
@@ -84,158 +82,152 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     Container(
                       padding: EdgeInsets.all(10),
-                      margin:EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color:Colors.orange[200],
-                        borderRadius: BorderRadius.circular(15)
-                      ),
+                          color: Colors.orange[200],
+                          borderRadius: BorderRadius.circular(15)),
                       child: Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Column(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: _userData!.user_picture != null ?
-                                  Image.network(_userData!.user_picture!,
-                                    height: 100, 
-                                    width: 100,
-                                    fit: BoxFit.cover,
-                                  )
-                                  :
-                                  Image.asset(
-                                  "assets/anya.jpg",
-                                  height: 100,
-                                  width: 100,
-                                  fit: BoxFit.cover,
-                                )
-                        
-                              ),
-                              Text(_userData!.user_name),
-                              Text(_userData!.user_email),
-                              InkWell(
-                    onTap: () {
-                      handleLogout();
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 5),
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 235, 191, 111),
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Logout",style:const TextStyle(fontSize: 13 ,fontWeight: FontWeight.w500,color: Color.fromARGB(255, 31, 29, 29)),),                     //SizedBox(width: 3,),
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              children: [
+                                ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: _userData!.user_picture != null
+                                        ? Image.network(
+                                            _userData!.user_picture!,
+                                            height: 100,
+                                            width: 100,
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Image.asset(
+                                            "assets/anya.jpg",
+                                            height: 100,
+                                            width: 100,
+                                            fit: BoxFit.cover,
+                                          )),
+                                Text(_userData!.user_name),
+                                Text(_userData!.user_email),
+                                InkWell(
+                                  onTap: () {
+                                    handleLogout();
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 5),
+                                    decoration: const BoxDecoration(
+                                      color: Color.fromARGB(255, 235, 191, 111),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    ),
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Logout",
+                                          style: const TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color.fromARGB(
+                                                  255, 31, 29, 29)),
+                                        ), //SizedBox(width: 3,),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text("Pending"),
+                                    Text(getPendingOrders().length.toString())
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Column(
+                                  children: [
+                                    Text("Received"),
+                                    Text(
+                                        getNotPendingOrders().length.toString())
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Column(
+                                  children: [
+                                    Text("Total"),
+                                    Text(_orders.length.toString())
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
-                  )
-                            ],
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      child:Row(
+                        children: [                       
+                          InkWell(
+                            onTap: (){
+                              setState(() {
+                                tabView = 0;
+                              });
+                            },
+                            child: Text("Pending"),
                           ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Column(
-                                children: [
-                                  Text("Pending"),
-                                  Text(getPendingOrders().length.toString())
-                                ],
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Column(
-                                children: [
-                                  Text("Received"),
-                                  Text(getNotPendingOrders().length.toString())
-                                ],
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Column(
-                                children: [
-                                  Text("Total"),
-                                  Text(_orders.length.toString())
-                                ],
-                              )
-                            ],
-                          ),
-                        )
+                          InkWell(
+                            onTap: (){
+                              setState(() {
+                                tabView = 1;
+                              });
+                            },
+                            child: Text("Received"),
+                          )
                       ],
                     ),
-                    
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    //pending                       SizedBox(height: 10,),
-                    Row(
-                      children: [Text("Pending Orders")],
-                    ),
-                    SizedBox(
-                      height: 10,
                     ),
                     Container(
                       child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: getPendingOrders().length,
-                        itemBuilder: (context, index) {
-                          Order order = getPendingOrders()[index];
-                          return OrderCard(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: tabView == 0 ? getPendingOrders().length:getNotPendingOrders().length,
+                      itemBuilder: (context, index) {
+                        Order order = tabView== 0? getPendingOrders()[index]:getNotPendingOrders()[index];
+                        return OrderCard(
                             foodImage: order.food.foodPicture,
                             foodName: order.food.foodName,
                             foodQuantity: order.quantity,
                             totalPrice: order.food.foodPrice.toInt(),
                             userName: order.food.foodCategory,
-                            userLocation: "Date: "+order.orderTime.month.toString()+" | "+order.orderTime.day.toString(),
-                             userContact: _userData!.user_location,              
-                             orderId: order.orderId,
-                             fetchData: fetchData,
-                             orderStat:order.orderStatus
-                             );
-                        },
+                            userLocation: "Date: " +
+                                order.orderTime.month.toString() +
+                                " | " +
+                                order.orderTime.day.toString(),
+                            userContact: _userData!.user_location,
+                            orderId: order.orderId,
+                            fetchData: fetchData,
+                            orderStat: order.orderStatus);
+                      },
                     )),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [Text("Received Orders")],
-                    ),
-
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: getNotPendingOrders().length,
-                        itemBuilder: (context, index) {
-                          Order order = getNotPendingOrders()[index];
-                          return OrderCard(
-                            foodImage: order.food.foodPicture,
-                            foodName: order.food.foodName,
-                            foodQuantity: order.quantity,
-                            totalPrice: order.food.foodPrice.toInt(),
-                            userName: order.food.foodCategory,
-                            userLocation: "Date: "+order.orderTime.day.toString(),
-                             userContact: order.food.foodDescription.substring(0,8),
-                              orderId: order.orderId,fetchData: fetchData,
-                              orderStat:order.orderStatus
-                              );
-                        },
-                      ),
-                    ),
                   ],
                 ))
               : Center(
@@ -244,6 +236,74 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
+
+
+
+/**
+ *                     Row(
+                      children: [Text("Pending Orders")],
+                    ),
+
+                    Container(
+                        child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: getPendingOrders().length,
+                      itemBuilder: (context, index) {
+                        Order order = getPendingOrders()[index];
+                        return OrderCard(
+                            foodImage: order.food.foodPicture,
+                            foodName: order.food.foodName,
+                            foodQuantity: order.quantity,
+                            totalPrice: order.food.foodPrice.toInt(),
+                            userName: order.food.foodCategory,
+                            userLocation: "Date: " +
+                                order.orderTime.month.toString() +
+                                " | " +
+                                order.orderTime.day.toString(),
+                            userContact: _userData!.user_location,
+                            orderId: order.orderId,
+                            fetchData: fetchData,
+                            orderStat: order.orderStatus);
+                      },
+                    )),
+
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                      ),
+                      child: Row(
+                        children: [Text("Received Orders")],
+                      ),
+                    ),
+
+                    //received
+                    Container(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: getNotPendingOrders().length,
+                        itemBuilder: (context, index) {
+                          Order order = getNotPendingOrders()[index];
+                          return OrderCard(
+                              foodImage: order.food.foodPicture,
+                              foodName: order.food.foodName,
+                              foodQuantity: order.quantity,
+                              totalPrice: order.food.foodPrice.toInt(),
+                              userName: order.food.foodCategory,
+                              userLocation:
+                                  "Date: " + order.orderTime.day.toString(),
+                              userContact:
+                                  order.food.foodDescription.substring(0, 8),
+                              orderId: order.orderId,
+                              fetchData: fetchData,
+                              orderStat: order.orderStatus);
+                        },
+                      ),
+                    ),
+                 
+ * 
+ */
 
 
 /**
