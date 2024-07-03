@@ -4,6 +4,7 @@ import 'package:hunger/apiControllers/postorder.dart';
 import 'package:hunger/dataModels/userModel.dart';
 import 'package:hunger/dataModels/orderModel.dart';
 import 'package:hunger/globalStates/LoginInfoProvider.dart';
+import 'package:hunger/globalStates/userAuthProvider.dart';
 import 'package:hunger/pages/components/orderCard.dart';
 import 'package:provider/provider.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -32,11 +33,11 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> fetchData() async {
     try {
       final loginInfoProvider =
-      Provider.of<LoginInfoProvider>(context, listen: false);
-      final loginInfo = await loginInfoProvider.loginInfo;
+      Provider.of<UserAuthProvider>(context, listen: false);
+      final loginInfo = loginInfoProvider.authData.token;
       if (loginInfo != null) {
-        Map<String, dynamic> token = JwtDecoder.decode(loginInfo.accessToken);
-        UserModel user = await getUser(loginInfo.accessToken, token["user_id"]);
+        Map<String, dynamic> token = JwtDecoder.decode(loginInfo);
+        UserModel user = await getUser(loginInfo, token["user_id"]);
         List<Order> orders = await fetchOrdersByUserId(user.user_id);
         setState(() {
           _userData = user;
@@ -58,8 +59,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void handleLogout(){
       final loginInfoProvider =
-          Provider.of<LoginInfoProvider>(context, listen: false);
-          loginInfoProvider.unsetLoginInfo(); 
+          Provider.of<UserAuthProvider>(context, listen: false);
+          loginInfoProvider.logOut(); 
   }
 
   List<Order> getPendingOrders() {
@@ -86,7 +87,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       margin:EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color:Colors.orange[200]
+                        color:Colors.orange[200],
+                        borderRadius: BorderRadius.circular(15)
                       ),
                       child: Row(
                       children: [
@@ -96,12 +98,20 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(50),
-                                child: Image.asset(
+                                child: _userData!.user_picture != null ?
+                                  Image.network(_userData!.user_picture!,
+                                    height: 100, 
+                                    width: 100,
+                                    fit: BoxFit.cover,
+                                  )
+                                  :
+                                  Image.asset(
                                   "assets/anya.jpg",
                                   height: 100,
                                   width: 100,
                                   fit: BoxFit.cover,
-                                ),
+                                )
+                        
                               ),
                               Text(_userData!.user_name),
                               Text(_userData!.user_email),
@@ -187,8 +197,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             foodQuantity: order.quantity,
                             totalPrice: order.food.foodPrice.toInt(),
                             userName: order.food.foodCategory,
-                            userLocation: "Date: "+order.orderTime.day.toString(),
-                             userContact: order.food.foodDescription.substring(0,8), 
+                            userLocation: "Date: "+order.orderTime.month.toString()+" | "+order.orderTime.day.toString(),
+                             userContact: _userData!.user_location,              
                              orderId: order.orderId,
                              fetchData: fetchData,
                              orderStat:order.orderStatus

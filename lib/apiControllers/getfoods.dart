@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:hunger/dataModels/foodModel.dart';
 
 Future<List<FoodModel>> getFoods() async{
-  String url = "http://192.168.243.213:5000/food/allfoods";
+  String url = "http://192.168.0.106:5000/food/allfoods";
   final response = await http.get(Uri.parse(url));
   //List<FoodModel> foodList = [];
   if(response.statusCode == 200){
@@ -15,6 +15,5 @@ Future<List<FoodModel>> getFoods() async{
     return throw Exception('response failed');
   }
 }
-
 
 

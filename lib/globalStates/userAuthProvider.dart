@@ -72,5 +72,12 @@ class UserAuthProvider with ChangeNotifier{
   onError(error)async{
      return error;
   }
+  
+  void logOut(){
+    authData.token = null;
+    authData.message = "";
+    statusCode = 0;
+    notifyListeners();
+  }
 
 }

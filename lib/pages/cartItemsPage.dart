@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hunger/apiControllers/postorder.dart';
+import 'package:hunger/dataModels/userModel.dart';
 import 'package:hunger/globalStates/LoginInfoProvider.dart';
 import 'package:hunger/globalStates/cartItemProvider.dart';
+import 'package:hunger/globalStates/userAuthProvider.dart';
+import 'package:hunger/pages/components/orderToken.dart';
 import 'package:provider/provider.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:hunger/apiControllers/getUser.dart';
@@ -15,126 +18,75 @@ class CartItems extends StatefulWidget {
 
 class _CartItems extends State<CartItems> {
   int? itemQuantity;
+  UserModel? _userData;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  
+  Future<void> fetchData() async {
+    try {
+      final loginInfoProvider = Provider.of<UserAuthProvider>(context, listen: false);
+      final loginInfo = loginInfoProvider.authData.token;
+      if (loginInfo != null) {
+        Map<String, dynamic> token = JwtDecoder.decode(loginInfo);
+        UserModel user = await getUser(loginInfo, token["user_id"]);
+        setState(() {
+          _userData = user;
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.orange[100],
-        body: SingleChildScrollView(
-            child: Consumer<LoginInfoProvider>(builder: (context, user, child) {
-          return FutureBuilder(
-              future: user.loginInfo,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  Map<String, dynamic> token =
-                      JwtDecoder.decode(snapshot.data!.accessToken);
-                  return FutureBuilder(
-                      future:
-                          getUser(snapshot.data!.accessToken, token["user_id"]),
-                      builder: (context, snapshot) {
-                        print(snapshot.hasData);
-                        if (snapshot.hasData) {
-                          return Consumer<CartItemProvider>(
-                              builder: (context, cartList, child) {
-                            return Column(children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                padding: EdgeInsets.all(10),
-                                margin: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    color: Colors.orange[200],
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Order Token",
-                                          style: TextStyle(
-                                              fontSize: 21,
-                                              color: Colors.brown[800],
-                                              fontWeight: FontWeight.bold,
-                                              letterSpacing: 1),
-                                        ),
-                                        Text(
-                                          "Selected Item: ${cartList.cartLength}",
-                                          style: TextStyle(
-                                              fontSize: 17,
-                                              color: Colors.brown[800],
-                                              letterSpacing: 1),
-                                        ),
-                                        Text(
-                                          "Total Items : ${cartList.totalItem()}",
-                                          style: TextStyle(
-                                              fontSize: 17,
-                                              color: Colors.brown[800],
-                                              letterSpacing: 1),
-                                        ),
-                                        Text(
-                                          "Total Price: ${cartList.getTotalPrice()}",
-                                          style: TextStyle(
-                                              fontSize: 17,
-                                              color: Colors.brown[800],
-                                              letterSpacing: 1),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        InkWell(
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 25, vertical: 10),
-                                            decoration: BoxDecoration(
-                                              color: Colors.brown[500],
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              //border: Border.all(width: 3,color: Colors.black)
-                                            ),
-                                            child: const Text(
-                                              "Place Order",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  letterSpacing: 2,
-                                                  fontSize: 16),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                          child: Image.asset(
-                                            "assets/anya.jpg",
-                                            width: 100,
-                                            height: 100,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(snapshot.data!.user_name)
-                                      ],
-                                    )
-                                  ],
-                                ),
+        body: _isLoading
+          ?
+        Center(
+          child: CircularProgressIndicator(color: Colors.orange,),
+        ) 
+          :
+        _userData == null 
+          ?
+          Center(
+            child:Text("No Valid User Data")
+          )
+          :
+          SingleChildScrollView(
+          child: Consumer<CartItemProvider>(
+                      builder: (context, cartList, child) {
+                      return Column(children: [
+                              OrderToken(
+                                userName: _userData!.user_name,
+                                totalItem: cartList.cartLength,
+                                uniqueItem: cartList.totalItem(),
+                                totalPrice: cartList.getTotalPrice().toInt(),
                               ),
+
                               ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: cartList.cartLength,
                                   itemBuilder: (context, index) {
                                     return Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
+                                        width: MediaQuery.of(context).size.width,
                                         padding: EdgeInsets.all(10),
                                         margin: EdgeInsets.symmetric(
                                             vertical: 5, horizontal: 10),
@@ -304,11 +256,12 @@ class _CartItems extends State<CartItems> {
                                   ),
                                 ),
                                 onTap: () async {
+                        
                                   for (int i = 0;
                                       i < cartList.cartItems.length;
                                       i++) {
                                     OrderPost order = OrderPost(
-                                      orderedUserId: snapshot.data!.user_id,
+                                      orderedUserId: _userData!.user_id,
                                       orderedFoodId: cartList
                                           .cartItems[i].food_model.foodId,
                                       quantity: cartList.cartItems[i].quantity,
@@ -324,18 +277,14 @@ class _CartItems extends State<CartItems> {
                                           'Failed to place order for item $i: $e');
                                     }
                                   }
-                                    cartList.clearList();
-
+                                  cartList.clearList();
                                 },
                               )
                             ]);
-                          });
-                        }
-                        return Text("Invalid");
-                      });
-                }
-                return Text("Invalid");
-              });
-        })));
+                  })
+                      
+                
+        ));
+  
   }
 }

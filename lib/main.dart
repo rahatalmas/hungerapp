@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hunger/globalStates/LoginInfoProvider.dart';
 import 'package:hunger/globalStates/mealprovider.dart';
 import 'package:hunger/globalStates/userAuthProvider.dart';
+import 'package:hunger/pages/homepage.dart';
 import 'package:hunger/pages/registerPage.dart';
 import 'package:hunger/rootpage.dart';
 import 'package:hunger/pages/loginpage.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    final userAuth = Provider.of<UserAuthProvider>(context);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Hunger',
@@ -34,7 +36,19 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home:Consumer<LoginInfoProvider>(
+        home: userAuth.authData.token == null ? 
+         LoginPage()
+           :
+         Root()
+        );
+  }
+}
+
+
+/*
+version 1 protection
+
+Consumer<LoginInfoProvider>(
           builder: (context,user,child){
             print(user.loginInfo);
             if(user.loginInfo != null){
@@ -52,15 +66,6 @@ class MyApp extends StatelessWidget {
             }
           },
         )
-
-        );
-  }
-}
-
-
-/*
-version 1 protection
-
 
 
 */

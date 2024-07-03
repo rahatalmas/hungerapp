@@ -143,7 +143,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           locationController.text
                         );
                         registerRes.then((response){
-                          print(userAuth.statusCode);
+                         print(userAuth.statusCode);
                          print(userAuth.authData.token);
                          print(userAuth.authData.message);
                         });
