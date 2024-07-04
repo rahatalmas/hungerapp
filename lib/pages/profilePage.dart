@@ -30,8 +30,7 @@ class _ProfilePageState extends State<ProfilePage>
 
   Future<void> fetchData() async {
     try {
-      final loginInfoProvider =
-          Provider.of<UserAuthProvider>(context, listen: false);
+      final loginInfoProvider = Provider.of<UserAuthProvider>(context, listen: false);
       final loginInfo = loginInfoProvider.authData.token;
       if (loginInfo != null) {
         Map<String, dynamic> token = JwtDecoder.decode(loginInfo);

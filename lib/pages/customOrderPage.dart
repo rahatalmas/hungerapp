@@ -417,7 +417,7 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                                                           10),
                                                               color: Colors
                                                                   .orange[100]),
-                                                          child: Icon(
+                                                          child:const Icon(
                                                             Icons.add,
                                                             size: 20,
                                                             weight: 500,
@@ -525,14 +525,14 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                         },
                                         child: Container(
                                             alignment: Alignment.center,
-                                            padding: EdgeInsets.all(15),
-                                            margin: EdgeInsets.fromLTRB(
+                                            padding:const EdgeInsets.all(15),
+                                            margin: const EdgeInsets.fromLTRB(
                                                 5, 10, 0, 0),
                                             decoration: BoxDecoration(
                                                 color: Colors.red,
                                                 borderRadius:
                                                     BorderRadius.circular(10)),
-                                            child: Row(
+                                            child: const Row(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               mainAxisAlignment:
