@@ -1,7 +1,31 @@
 import 'package:flutter/material.dart';
 
 class CartItemCard extends StatelessWidget {
-  const CartItemCard({super.key});
+  CartItemCard(
+    {
+      super.key,
+      required this.foodName,
+      required this.foodPicture,
+      required this.date,
+      required this.category,
+      required this.hotelName,
+      required this.price,
+      required this.quantity,
+      required this.incQuantity,
+      required this.decQuantity,
+      required this.removeFromCart,
+    }
+  );
+  String foodName;
+  String foodPicture;
+  DateTime date;
+  String category;
+  String hotelName;
+  int price;
+  int quantity;
+  Function() incQuantity;
+  Function() decQuantity;
+  final VoidCallback removeFromCart;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -12,8 +36,8 @@ class CartItemCard extends StatelessWidget {
       child: Row(
         children: [
             ClipRRect(
-              child: Image.asset(
-                "assets/pizza.png",
+              child: Image.network(
+                foodPicture,
                 height: 100,
                 width: 100,
                 fit: BoxFit.cover,
@@ -24,29 +48,32 @@ class CartItemCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("name"),
+              Text(foodName),
               Row(children: [Text("Date"),Text("Category")],),
-              Text("Hotel Name"),
-              Text("Quantity"),
+              Text(hotelName),
+              Text("Tatal: ${price} x ${quantity} = ${price*quantity}"),
             ],
           )),
           Column(
             children: [
               InkWell(
+                onTap: incQuantity,
                 child: Container(
                   child: Icon(Icons.add),
                 ),
               ),
-              Text("2"),
+              Text(quantity.toString()),
               InkWell(
+                onTap: decQuantity,
                 child: Container(
-                  child: Icon(Icons.add),
+                  child: Icon(Icons.remove),
                 ),
               ),
             
             ],
           ),
           InkWell(
+            onTap: removeFromCart,
             child: Container(
               child: Icon(Icons.delete),
             ),

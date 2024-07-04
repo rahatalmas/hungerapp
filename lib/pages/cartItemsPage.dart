@@ -88,7 +88,22 @@ class _CartItems extends State<CartItems> {
                                   shrinkWrap: true,
                                   itemCount: cartList.cartLength,
                                   itemBuilder: (context, index) {
-                                    return CartItemCard();
+                                    return CartItemCard(
+                                      foodName: cartList.cartItems[index].food_model.foodName, 
+                                      foodPicture: cartList.cartItems[index].food_model.foodPicture,
+                                      date: DateTime.now(), 
+                                      category: cartList.cartItems[index].food_model.foodCategory, 
+                                      hotelName: cartList.cartItems[index].food_model.foodProvider.hotelName, 
+                                      price: cartList.cartItems[index].food_model.foodPrice.toInt(), 
+                                      quantity: cartList.cartItems[index].quantity, 
+                                      incQuantity: (){
+                                        cartList.addQuantity(index);
+                                      }, 
+                                      decQuantity: (){
+                                        cartList.subQuantity(index);
+                                      }, 
+                                      removeFromCart: ()=>{print("remove")}
+                                    );
                                   }),
                               
                               //order button
@@ -141,7 +156,7 @@ class _CartItems extends State<CartItems> {
                             ]);
                   })
                       
-                
+     
         ));
   
   }
