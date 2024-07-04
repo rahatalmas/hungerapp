@@ -16,7 +16,7 @@ class _MyHomePageState extends State<MyHomePage> {
         Column(
           children: [
             Container(
-                height: 200,
+                height: 210,
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(
                     horizontal: 10.0, vertical: 10.0),

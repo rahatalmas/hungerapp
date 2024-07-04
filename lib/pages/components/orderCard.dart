@@ -89,17 +89,23 @@ class _OrderCard extends State<OrderCard> {
                 style:
                     const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
               ),
-              Text(
+              Row(
+               
+               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                Text(
                 widget.userName,
                 style:
                     const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
               ),
               Text(
+
                 widget.userLocation,
                 style:
                     const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
                 maxLines: 2,
               ),
+              ],),
               Text(
                 widget.userContact,
                 style:

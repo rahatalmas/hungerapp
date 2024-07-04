@@ -28,18 +28,24 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    final MediaQueryData data = MediaQuery.of(context);
     final userAuth = Provider.of<UserAuthProvider>(context);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Hunger',
         theme: ThemeData(
+      
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: userAuth.authData.token == null ? 
+        
+        home: MediaQuery(
+          data: data.copyWith(textScaler: TextScaler.linear(1)),
+          child: userAuth.authData.token == null ? 
          LoginPage()
            :
-         Root()
+         Root(),
+         )
         );
   }
 }

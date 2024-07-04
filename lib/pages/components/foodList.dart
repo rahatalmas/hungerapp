@@ -37,7 +37,7 @@ class _FoodList extends State<FoodList> {
                 crossAxisCount: 2,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
-                childAspectRatio: 0.54,
+                childAspectRatio: 0.5,
                 children: List.generate(snapshot.data!.length, (index) {
                   return InkWell(
                     child:Column(
@@ -117,7 +117,7 @@ class _FoodList extends State<FoodList> {
                                                               style: TextStyle(
                                                                   fontWeight:
                                                                   FontWeight.w400,
-                                                                  fontSize: 18,
+                                                                  fontSize: 15,
                                                                   color: Colors.white),
                                                             ),
                                                             Icon(

@@ -59,13 +59,13 @@ class _CartItems extends State<CartItems> {
         backgroundColor: Colors.orange[100],
         body: _isLoading
           ?
-        Center(
+        const Center(
           child: CircularProgressIndicator(color: Colors.orange,),
         ) 
           :
         _userData == null 
           ?
-          Center(
+          const Center(
             child:Text("No Valid User Data")
           )
           :
@@ -75,25 +75,25 @@ class _CartItems extends State<CartItems> {
                       return Column(children: [
                               OrderToken(
                                 userName: _userData!.user_name,
+                                userPicture : _userData!.user_picture!,
+                                userLocation: _userData!.user_location,
                                 totalItem: cartList.cartLength,
                                 uniqueItem: cartList.totalItem(),
                                 totalPrice: cartList.getTotalPrice().toInt(),
                               ),
 
                               ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: cartList.cartLength,
                                   itemBuilder: (context, index) {
                                     return Container(
                                         width: MediaQuery.of(context).size.width,
-                                        padding: EdgeInsets.all(10),
-                                        margin: EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 10),
+                                        padding:const EdgeInsets.all(10),
+                                        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                                         decoration: BoxDecoration(
                                             color: Colors.orange[200],
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
+                                            borderRadius:BorderRadius.circular(10)),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,

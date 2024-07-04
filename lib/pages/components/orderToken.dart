@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
 
 class OrderToken extends StatelessWidget {
-  OrderToken({super.key,required this.userName,required this.totalItem, required this.uniqueItem, required this.totalPrice});
+  OrderToken(
+    {
+      super.key,
+      required this.userName,
+      required this.userPicture,
+      required this.userLocation,
+      required this.totalItem,
+      required this.uniqueItem,
+      required this.totalPrice
+    });
   // ${cartList.cartLength}
   //${cartList.totalItem()}
   // ${cartList.getTotalPrice()}
   // username
   String userName;
+  String userPicture;
+  String userLocation;
   int totalItem;
   int uniqueItem;
   int totalPrice;
@@ -21,9 +32,41 @@ class OrderToken extends StatelessWidget {
           color: Colors.orange[200], borderRadius: BorderRadius.circular(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
+          Expanded(
+            child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.network(
+                  userPicture,
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(
+                height: 0,
+              ),
+              Text(
+                userName,style:TextStyle(
+                fontSize: 20,fontWeight: FontWeight.bold,
+                letterSpacing: 1,
+                color:Colors.brown[800]
+              ),),
+              Text(
+                userLocation,style:TextStyle(
+                fontSize: 15,fontWeight: FontWeight.normal,
+                letterSpacing: 1,
+                color:Colors.brown[800]
+              ),)
+            ],
+          ),     
+          ),
+          Expanded(
+            child:           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -46,6 +89,11 @@ class OrderToken extends StatelessWidget {
               ),
               Text(
                 "Total Price:${totalPrice}",
+                style: TextStyle(
+                    fontSize: 17, color: Colors.brown[800], letterSpacing: 1),
+              ),
+              Text(
+                "Cash On Delivery",
                 style: TextStyle(
                     fontSize: 17, color: Colors.brown[800], letterSpacing: 1),
               ),
@@ -73,23 +121,8 @@ class OrderToken extends StatelessWidget {
               ),
             ],
           ),
-          Column(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Image.asset(
-                  "assets/anya.jpg",
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(userName)
-            ],
-          )
+        
+          ),
         ],
       ),
     );

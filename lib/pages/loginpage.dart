@@ -21,23 +21,6 @@ class _LoginPage extends State<LoginPage> {
   final TextEditingController user_name_controller = TextEditingController();
   final TextEditingController user_password_controller = TextEditingController();
 
-  String user_name = "";
-  String user_password = "";
-  late Future <UserLoginInfoModel> loginInfo;
-
-  Future <UserLoginInfoModel> _form_Submit_controller(){
-    if(_formKey.currentState!.validate()){
-      setState(() {
-        user_name = user_name_controller.text;
-        user_password = user_password_controller.text;
-      });
-      loginInfo = userLogin(user_name, user_password);
-      user_name_controller.clear();
-      user_password_controller.clear();
-      FocusScope.of(context).unfocus();
-    }
-    return loginInfo;
-  }
   @override
   Widget build(BuildContext context) {
     final userAuthProvider = Provider.of<UserAuthProvider>(context);
