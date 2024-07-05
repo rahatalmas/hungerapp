@@ -11,9 +11,18 @@ class FoodListProvider extends ChangeNotifier {
     _foodList = foods;
     notifyListeners();
   }
-  void getAllFoods() async{
-    List<FoodModel> allfoods;
-    allfoods = await getFoods();
-    setFoodList(allfoods);
+  void loadAllFoods() async{
+    List<FoodModel> foods;
+    foods = await getFoods();
+    setFoodList(foods);
   }
+  void filterByCategory(String category){
+     _foodList = _foodList.where((food)=>food.foodCategory == category).toList();
+     notifyListeners();
+  }
+  void filterByHotelname(String hotel){
+    _foodList = _foodList.where((food)=>food.foodProvider.hotelName == hotel).toList();
+    notifyListeners();
+  }
+
 }

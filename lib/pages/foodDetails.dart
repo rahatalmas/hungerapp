@@ -163,7 +163,7 @@ class _FoodDetails extends State<FoodDetails> {
                     padding: EdgeInsets.all(15),
                     child: Text("Related Items"),
                   ),
-                  FoodList()
+                  //FoodList()
                 ],
               ),
             )

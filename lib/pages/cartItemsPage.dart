@@ -129,6 +129,8 @@ class _CartItems extends State<CartItems> {
                                     Image.asset(
                                       "assets/cart.png",
                                       width: (MediaQuery.sizeOf(context).width*50)/100,
+                                      //height: MediaQuery.of(context).size.height-400,
+                                      
                                     ),
                                     const Text("No Item In Cart",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Color.fromARGB(255, 53, 30, 21)),),
                                    ],

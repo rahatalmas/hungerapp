@@ -186,9 +186,7 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                                     'BreakFast',
                                                     'Lunch',
                                                     'Dinner',
-                                                  ].map<
-                                                          DropdownMenuItem<
-                                                              String>>(
+                                                  ].map<DropdownMenuItem<String>>(
                                                       (String value) {
                                                     return DropdownMenuItem<
                                                             String>(
