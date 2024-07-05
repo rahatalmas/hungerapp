@@ -29,7 +29,6 @@ class _FoodDetails extends State<FoodDetails> {
 
   @override
   Widget build(BuildContext context) {
-  
     return Scaffold(
       backgroundColor: Colors.orange[100],
       appBar: AppBar(
@@ -133,7 +132,6 @@ class _FoodDetails extends State<FoodDetails> {
                               flex: 2,
                               child: InkWell(
                                 onTap: () {
-                                  
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

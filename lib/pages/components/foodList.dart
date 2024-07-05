@@ -1,16 +1,10 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:hunger/apiControllers/getfoods.dart';
+import 'package:hunger/dataModels/cartItemModel.dart';
 import 'package:hunger/dataModels/foodModel.dart';
-import 'package:hunger/dataModels/userModel.dart';
-import 'package:hunger/globalStates/foodDataProvider.dart';
-import 'package:hunger/globalStates/userAuthProvider.dart';
+import 'package:hunger/globalStates/cartItemProvider.dart';
 import 'package:hunger/pages/foodDetails.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
-
-//List<int> l = [1,2,3];
 
 class FoodList extends StatefulWidget {
   const FoodList({super.key});
@@ -19,39 +13,32 @@ class FoodList extends StatefulWidget {
 }
 
 class _FoodList extends State<FoodList> {
+  late Future<List<FoodModel>> foodList;
+
   @override
-  void initState(){
-     super.initState();
-     Provider.of<FoodDataProvider>(context,listen: false).allFoods();
+  void initState() {
+    super.initState();
+    foodList = getFoods();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    final foodProvider =  Provider.of<FoodDataProvider>(context,listen: false);
-
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 5),
         padding: EdgeInsets.all(10),
         //decoration: BoxDecoration(color: Colors.orange[200]),
-        child:GridView.count(
+        child: FutureBuilder(
+          future: foodList,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return GridView.count(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 crossAxisCount: 2,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
                 childAspectRatio: 0.5,
-                children: foodProvider.filterHotel("Ghibli Food Shop").map((food){
-                  return Text(food.foodName);
-                }).toList()
-              )
-    );
-  }
-}
-
-
-/**
- *  List.generate(snapshot.data!.length, (index) {
+                children: List.generate(snapshot.data!.length, (index) {
                   return InkWell(
                     child:Column(
                         children: [
@@ -190,7 +177,24 @@ class _FoodList extends State<FoodList> {
                     },
                   );
                 }).reversed.toList(),
-              
- * 
- * 
- */
+              );
+            }
+           /* else if(snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }*/
+            return Center(
+              child: Column(
+                children: [
+                  Image.asset("assets/avo.gif",width: 100,),
+                  Text("Food is Loading...",style: TextStyle(
+                    fontSize: 25
+                  ),)
+                ],
+              ),
+            );
+          },
+
+        )
+    );
+  }
+}

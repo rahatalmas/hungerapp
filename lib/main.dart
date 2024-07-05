@@ -12,7 +12,6 @@ void main() {
      MultiProvider(
          providers:[
            ChangeNotifierProvider(create: (context)=>UserAuthProvider()),
-           ChangeNotifierProvider(create: (context)=>FoodDataProvider()),
            ChangeNotifierProvider(create: (context)=>CartItemProvider()),
            ChangeNotifierProvider(create: (context)=>MealItemProvider()),
          ],
@@ -27,6 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     //final MediaQueryData data = MediaQuery.of(context);
     final userAuth = Provider.of<UserAuthProvider>(context);
+
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Hunger',

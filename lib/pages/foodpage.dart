@@ -16,7 +16,6 @@ class _FoodPage extends State<FoodPage> {
           children: [
             Column(
               children: [
-                //header
                 Container(
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.all(10),
@@ -77,8 +76,6 @@ class _FoodPage extends State<FoodPage> {
                     ],
                   ),
                 ),
-                
-                //menu and filters
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   child: Row(
@@ -102,16 +99,17 @@ class _FoodPage extends State<FoodPage> {
                       Row(
                         children: [
                           Text(
-                            "All Category",
+                            "Breakfast",
                             style: TextStyle(
                                 fontSize: 17,
                                 color: Colors.brown[700],
                                 fontWeight: FontWeight.w600),
-                          ),    
-                          Icon(Icons.arrow_drop_down_outlined), 
-                          
+                          ),
+                          SizedBox(
+                            width: 0,
+                          ),
+                          Icon(Icons.arrow_drop_down_outlined),
                           SizedBox(width: 10,),
-
                           Text(
                             "All Hotel",
                             style: TextStyle(
@@ -119,14 +117,15 @@ class _FoodPage extends State<FoodPage> {
                                 color: Colors.brown[700],
                                 fontWeight: FontWeight.w600),
                           ),
+                          SizedBox(
+                            width: 0,
+                          ),
                           Icon(Icons.arrow_drop_down_outlined),
                         ],
                       )
                     ],
                   ),
                 ),
-                
-                //food list
                 FoodList()
               ],
             )

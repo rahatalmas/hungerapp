@@ -27,8 +27,6 @@ class UserAuthProvider with ChangeNotifier{
       "user_picture":userPicture.trim(),
       "user_location":userLocation.trim()
     };
-
-    //register
     return await post(
       Uri.parse("http://192.168.0.106:5000/user/register"),
       body: jsonEncode(registrationData),
@@ -47,8 +45,7 @@ class UserAuthProvider with ChangeNotifier{
       "user_name":userName.trim(),
       "user_password":password.trim()
     };
-    
-    //login
+
     return await post(
       Uri.parse("http://192.168.0.106:5000/user/login"),
       body:jsonEncode(loginData),
