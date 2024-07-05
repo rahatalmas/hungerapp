@@ -15,5 +15,3 @@ Future<List<FoodModel>> getFoods() async{
     return throw Exception('response failed');
   }
 }
-
-

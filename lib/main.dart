@@ -12,6 +12,7 @@ void main() {
      MultiProvider(
          providers:[
            ChangeNotifierProvider(create: (context)=>UserAuthProvider()),
+           ChangeNotifierProvider(create: (context)=>FoodListProvider()),
            ChangeNotifierProvider(create: (context)=>CartItemProvider()),
            ChangeNotifierProvider(create: (context)=>MealItemProvider()),
          ],

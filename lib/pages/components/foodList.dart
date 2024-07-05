@@ -3,8 +3,12 @@ import 'package:hunger/apiControllers/getfoods.dart';
 import 'package:hunger/dataModels/cartItemModel.dart';
 import 'package:hunger/dataModels/foodModel.dart';
 import 'package:hunger/globalStates/cartItemProvider.dart';
+import 'package:hunger/globalStates/foodDataProvider.dart';
 import 'package:hunger/pages/foodDetails.dart';
 import 'package:provider/provider.dart';
+
+List<int> l = [1,3,4];
+
 
 class FoodList extends StatefulWidget {
   const FoodList({super.key});
@@ -13,32 +17,44 @@ class FoodList extends StatefulWidget {
 }
 
 class _FoodList extends State<FoodList> {
-  late Future<List<FoodModel>> foodList;
-
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
-    foodList = getFoods();
+    foodListGetter();
+    //foodList = getFoods();
+  }
+
+  foodListGetter() async{
+    _isLoading = true;
+    final foodDataProvider = Provider.of<FoodListProvider>(context,listen:false);
+    List<FoodModel> allfoods;
+    allfoods = await getFoods();
+    foodDataProvider.setFoodList(allfoods);
+    setState((){
+      _isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final foodDataProvider = Provider.of<FoodListProvider>(context,listen:false);
+    return _isLoading ? 
+    Center(child: CircularProgressIndicator(color: Colors.orange,),)
+    :
+    Container(
         margin: EdgeInsets.symmetric(horizontal: 5),
         padding: EdgeInsets.all(10),
         //decoration: BoxDecoration(color: Colors.orange[200]),
-        child: FutureBuilder(
-          future: foodList,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return GridView.count(
+        child:
+              GridView.count(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 crossAxisCount: 2,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
                 childAspectRatio: 0.5,
-                children: List.generate(snapshot.data!.length, (index) {
+                children: foodDataProvider.allFoods.map((food){
                   return InkWell(
                     child:Column(
                         children: [
@@ -72,42 +88,42 @@ class _FoodList extends State<FoodList> {
                                           mainAxisAlignment: MainAxisAlignment.end,
                                           children: [
                                             Text(
-                                              '${
-                                                  snapshot.data![index].foodName
-                                              }',
+                                              
+                                                  food.foodName
+                                              ,
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 20,
                                                   color: Colors.brown[700]),
                                             ),
                                             Text(
-                                              '${snapshot.data![index].foodProvider.hotelName}',
+                                              food.foodProvider.hotelName,
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 15,
                                                   color: Colors.brown[700]),
                                             ),
                                             Text(
-                                              'Price: ${snapshot.data![index].foodPrice}',
+                                              'Price: ${food.foodPrice}',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 20,
                                                   color: Colors.brown[700]),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 10,
                                             ),
                                             Consumer<CartItemProvider>(
                                                 builder: (context,cartList,child){
                                                   return InkWell(
                                                     child: Container(
-                                                        padding: EdgeInsets.all(8),
+                                                        padding: const EdgeInsets.all(8),
                                                         decoration: BoxDecoration(
                                                             color: Colors.brown[700],
                                                             borderRadius:
                                                             BorderRadius.circular(
                                                                 10)),
-                                                        child: Row(
+                                                        child:const Row(
                                                           mainAxisAlignment:
                                                           MainAxisAlignment
                                                               .spaceBetween,
@@ -129,7 +145,7 @@ class _FoodList extends State<FoodList> {
                                                     onTap: (){
                                                       print('add to cart');
                                                       CartItemModel item = CartItemModel(
-                                                          food_model: snapshot.data![index],
+                                                          food_model: food,
                                                         
                                                           quantity: 1,
                                                           date: DateTime.now(),
@@ -137,7 +153,7 @@ class _FoodList extends State<FoodList> {
                                                       cartList.addCartItem(item);
                                                       ScaffoldMessenger.of(context).showSnackBar(
                                                         SnackBar(
-                                                          content: Text("${snapshot.data![index].foodName} Added To Cart",style: TextStyle(color: Colors.white),),
+                                                          content: Text("${food.foodName} Added To Cart",style: TextStyle(color: Colors.white),),
                                                           backgroundColor: Colors.brown[800],
                                                           duration: Duration.zero,
                                                         )
@@ -156,7 +172,7 @@ class _FoodList extends State<FoodList> {
                                   top: -70,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(100),
-                                    child:Image.network(snapshot.data![index].foodPicture,
+                                    child:Image.network(food.foodPicture,
                                       width: 140, height: 140,
                                       fit: BoxFit.cover,
                                     ),
@@ -171,30 +187,19 @@ class _FoodList extends State<FoodList> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context)=>FoodDetails(data: snapshot.data![index],)
+                            builder: (context)=>FoodDetails(data: food,)
                         )
                       );
                     },
                   );
-                }).reversed.toList(),
-              );
-            }
+                }).toList()
+              )
+            
            /* else if(snapshot.hasError) {
               return Text('${snapshot.error}');
             }*/
-            return Center(
-              child: Column(
-                children: [
-                  Image.asset("assets/avo.gif",width: 100,),
-                  Text("Food is Loading...",style: TextStyle(
-                    fontSize: 25
-                  ),)
-                ],
-              ),
-            );
-          },
 
-        )
     );
+  
   }
 }
