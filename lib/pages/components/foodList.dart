@@ -28,9 +28,7 @@ class _FoodList extends State<FoodList> {
   foodListGetter() async{
     _isLoading = true;
     final foodDataProvider = Provider.of<FoodListProvider>(context,listen:false);
-    List<FoodModel> allfoods;
-    allfoods = await getFoods();
-    foodDataProvider.setFoodList(allfoods);
+    foodDataProvider.getAllFoods();
     setState((){
       _isLoading = false;
     });
