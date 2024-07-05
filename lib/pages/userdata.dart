@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:hunger/apiControllers/getUser.dart';
 import 'package:hunger/globalStates/LoginInfoProvider.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +41,6 @@ class _UserData extends State<UserData>{
               }
 );          
   }
-}
+}*/
 
 

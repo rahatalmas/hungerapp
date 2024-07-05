@@ -71,7 +71,7 @@ class _OrderCard extends State<OrderCard> {
             borderRadius: BorderRadius.circular(10),
             child: Image.network(
               widget.foodImage,
-              width: 125,
+              width: (MediaQuery.of(context).size.width*30)/100,
               height: 125,
               fit: BoxFit.cover,
             ),
@@ -148,7 +148,7 @@ class _OrderCard extends State<OrderCard> {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: Text('Status'),
-                            content: Text("Not Delivered Yet..."),
+                            content: Text("Click The Delete Icons If you Received your Order..."),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -194,7 +194,15 @@ class _OrderCard extends State<OrderCard> {
                   widget.orderStat?Text("") : InkWell(
                     onTap: () {
                       updateOrderStatus(widget.orderId,true);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.brown[900],
+                            
+                            content: Text("Enjoy Your Meal",style: TextStyle(color: Colors.white),)
+                        )
+                      );
                       widget.fetchData();
+                
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hunger/apiControllers/postorder.dart';
 import 'package:hunger/dataModels/userModel.dart';
-import 'package:hunger/globalStates/LoginInfoProvider.dart';
 import 'package:hunger/globalStates/cartItemProvider.dart';
 import 'package:hunger/globalStates/userAuthProvider.dart';
 import 'package:hunger/pages/components/cartItemCard.dart';
@@ -12,7 +11,7 @@ import 'package:hunger/apiControllers/getUser.dart';
 import 'package:hunger/dataModels/orderModel.dart';
 
 class CartItems extends StatefulWidget {
-  CartItems({super.key});
+  const CartItems({super.key});
   @override
   State<CartItems> createState() => _CartItems();
 }

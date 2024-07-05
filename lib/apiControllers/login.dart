@@ -1,9 +1,9 @@
-import 'package:http/http.dart' as http;
+/*import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:hunger/dataModels/userModel.dart';
 
 Future<UserLoginInfoModel> userLogin(user_name,user_password) async{
-  String url = "http://192.168.0.106:5000/user/login";
+  String url = "http://192.168.112.213:5000/user/login";
   final response = await http.post(
       Uri.parse(url),
       headers:<String,String>{
@@ -18,4 +18,4 @@ Future<UserLoginInfoModel> userLogin(user_name,user_password) async{
     return UserLoginInfoModel.formJson(jsonDecode(response.body));
   }
   throw Exception('login failed');
-}
+}*/

@@ -29,31 +29,44 @@ class CartItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      
       width: MediaQuery.of(context).size.width,
+      //height: 110,
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       decoration: BoxDecoration(color: Colors.orange[200], borderRadius: BorderRadius.circular(10)),
       child: Row(
         children: [
             ClipRRect(
+              borderRadius: BorderRadius.circular(15),
               child: Image.network(
                 foodPicture,
+                width: (MediaQuery.of(context).size.width*30)/100,
                 height: 100,
-                width: 100,
                 fit: BoxFit.cover,
               ),
             ),
+            SizedBox(width: 10,),
           Expanded(
             child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(foodName),
-              Row(children: [Text("Date"),Text("Category")],),
+              Text(foodName, 
+                    style: const TextStyle(
+                      fontSize: 17, fontWeight: FontWeight.w500),
+              ),
               Text(hotelName),
-              Text("Tatal: ${price} x ${quantity} = ${price*quantity}"),
+              Row(
+                children: [
+                  Text(date.day.toString()+"-"+date.month.toString()+"-"+date.year.toString()+" | ",style: TextStyle(fontSize: 10),),
+                  Text(category,style: TextStyle(fontSize: 12),)
+                ],),
+              Text("Tatal: $price x $quantity = ${price*quantity}"),
             ],
           )),
+
+          //buttons
           Column(
             children: [
               InkWell(
@@ -72,11 +85,25 @@ class CartItemCard extends StatelessWidget {
             
             ],
           ),
-          InkWell(
-            onTap: removeFromCart,
-            child: Container(
-              child: Icon(Icons.delete),
-            ),
+          SizedBox(width: 10,),
+          Column(
+
+            children: [
+              InkWell(
+                onTap: removeFromCart,
+                child: Container(
+                   padding: EdgeInsets.fromLTRB(7, 25, 0, 25),
+                  //height: MediaQuery.of(context).size.height,
+                  decoration:const BoxDecoration(
+                    //color: Colors.red,
+                    border: BorderDirectional(start: BorderSide(color:Color.fromARGB(255, 172, 4, 4),width: 2)),
+                    //borderRadius: BorderRadius.circular(5)
+                    
+                  ),
+                  child: Icon(Icons.delete_forever_outlined,),
+                ),
+              )
+            ],
           )
         ],
       ),

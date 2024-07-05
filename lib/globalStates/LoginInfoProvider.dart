@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+/*import 'package:flutter/cupertino.dart';
 import 'package:hunger/dataModels/userModel.dart';
 
 class LoginInfoProvider extends ChangeNotifier {
@@ -12,4 +12,4 @@ class LoginInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
   Future<UserLoginInfoModel>? get loginInfo => _loginInfo;
-}
+}*/

@@ -148,9 +148,7 @@ class _LoginPage extends State<LoginPage> {
                         //),
                         color: Colors.brown[500],
                         borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child:Consumer<LoginInfoProvider>(
-                      builder: (context,user,child){
-                        return InkWell(
+                    child: InkWell(
                           child: const Center(
                             child: Text(
                               "Login",
@@ -172,9 +170,8 @@ class _LoginPage extends State<LoginPage> {
                               });
                             }
                           },
-                        );
-                      },
-                    )
+                        )
+                     
                   ),
                   SizedBox(
                     height: 10,

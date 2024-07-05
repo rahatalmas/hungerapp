@@ -15,8 +15,7 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage>
-   {
+class _ProfilePageState extends State<ProfilePage>{
   UserModel? _userData;
   int tabView = 0;
   List<Order> _orders = [];
@@ -47,7 +46,6 @@ class _ProfilePageState extends State<ProfilePage>
         });
       }
     } catch (e) {
-      print('Error fetching data: $e');
       setState(() {
         _isLoading = false;
       });
@@ -88,11 +86,14 @@ class _ProfilePageState extends State<ProfilePage>
                           color: Colors.orange[200],
                           borderRadius: BorderRadius.circular(15)),
                       child: Row(
+
                         children: [
                           Expanded(
                             flex: 1,
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+
                                 ClipRRect(
                                     borderRadius: BorderRadius.circular(50),
                                     child: _userData!.user_picture != null
@@ -227,6 +228,7 @@ class _ProfilePageState extends State<ProfilePage>
                       ),
                     ),
                     SizedBox(height: 10,),
+                    
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: 10,vertical: 0),
                       padding: EdgeInsets.all(10),
@@ -277,10 +279,36 @@ class _ProfilePageState extends State<ProfilePage>
                               Text("Received")
                             ],),
                           ),
+                          ),
+                          Container(
+                            height: 20,
+                            width: 7,
+                            decoration: BoxDecoration(  
+                              borderRadius: BorderRadius.circular(5), 
+                              color: Colors.orange
+                            ), 
+                          ),
+                          Expanded(
+                            child: InkWell(
+                            onTap: (){
+                              setState(() {
+                                tabView = 1;
+                              });
+                            },
+                            child:const Row(
+                               mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                              Icon(Icons.dashboard),
+                              Text("Dashboard")
+                            ],),
+                          ),
                           )
+                      
                       ],
                     ),
                     ),
+                    
                     SizedBox(height: 5,),
                     Container(
                       child: ListView.builder(

@@ -27,6 +27,8 @@ class UserAuthProvider with ChangeNotifier{
       "user_picture":userPicture.trim(),
       "user_location":userLocation.trim()
     };
+
+    //register
     return await post(
       Uri.parse("http://192.168.0.106:5000/user/register"),
       body: jsonEncode(registrationData),
@@ -39,13 +41,15 @@ class UserAuthProvider with ChangeNotifier{
   loginUser(String userName, String password) async{
     isLoading = true;
     ChangeNotifier();
+    //notifyListeners();
 
     final Map<String,dynamic> loginData = {
       "user_name":userName.trim(),
       "user_password":password.trim()
     };
-
-    return post(
+    
+    //login
+    return await post(
       Uri.parse("http://192.168.0.106:5000/user/login"),
       body:jsonEncode(loginData),
       headers: {

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hunger/globalStates/cartItemProvider.dart';
 import 'package:hunger/pages/customOrderPage.dart';
 import 'package:hunger/pages/homepage.dart';
 import 'package:hunger/pages/foodpage.dart';
 import 'package:hunger/pages/cartItemsPage.dart';
 import 'package:hunger/pages/profilePage.dart';
+import 'package:provider/provider.dart';
 
 class Root extends StatefulWidget {
   Root({super.key});
@@ -16,9 +18,9 @@ class _Root extends State<Root> {
   static final List<Widget> _widgetOptions = <Widget>[
     const MyHomePage(title: 'Hunger'),
     const FoodPage(),
-    CustomOrderPage(),
-    CartItems(),
-    ProfilePage(),
+    const CustomOrderPage(),
+    const CartItems(),
+    const ProfilePage(),
   ];
   changeIndex(int index){
     setState(() {
@@ -27,6 +29,7 @@ class _Root extends State<Root> {
   }
   @override
   Widget build(BuildContext context) {
+    final cartInfo = Provider.of<CartItemProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange[300],
@@ -56,7 +59,7 @@ class _Root extends State<Root> {
             )
           ],
         ),
-        actions: [
+        actions:const [
           Icon(Icons.search),
           SizedBox(
             width: 15,
@@ -93,7 +96,7 @@ class _Root extends State<Root> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 7,
                   ),
                   Text("Pretty Dey"),
@@ -186,7 +189,17 @@ class _Root extends State<Root> {
               icon: Stack(
                 children: [
                   Icon(Icons.shopping_cart),
-                  
+                  Positioned(
+                    top: -5,right: 0,
+                    child:Text(
+                          cartInfo.cartLength.toString(),
+                          style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,fontWeight: FontWeight.w500
+                          ),
+                       ),
+                     
+                  )
                 ],
               ),
               label: "Basket",
