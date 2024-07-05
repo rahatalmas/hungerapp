@@ -32,17 +32,57 @@ class OrderToken extends StatelessWidget {
           color: Colors.orange[200], borderRadius: BorderRadius.circular(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: Column(
+            child:           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Order Token",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.brown[800],
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1),
+              ),
+              Text(
+                "Selected Item : $uniqueItem",
+                style: TextStyle(
+                    fontSize: 15, color: Colors.brown[800],),
+              ),
+              Text(
+                "Total Items : $totalItem",
+                style: TextStyle(
+                    fontSize: 15, color: Colors.brown[800],),
+              ),
+              Text(
+                "Total Price : $totalPrice",
+                style: TextStyle(
+                    fontSize: 15, color: Colors.brown[800],),
+              ),
+              const Text(
+                "Cash On Delivery",
+                style: TextStyle(
+                    fontSize: 15, color: Color.fromARGB(255, 42, 70, 38),),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+        
+          ),
+            
+          Expanded(
+            child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Image.network(
                   userPicture,
-                  width: 100,
+                  width: (MediaQuery.of(context).size.width*100)/100,
                   height: 100,
                   fit: BoxFit.cover,
                 ),
@@ -56,50 +96,17 @@ class OrderToken extends StatelessWidget {
                 letterSpacing: 1,
                 color:Colors.brown[800]
               ),),
-              Text(
-                userLocation,style:TextStyle(
-                fontSize: 15,fontWeight: FontWeight.normal,
-                letterSpacing: 1,
-                color:Colors.brown[800]
-              ),)
             ],
           ),     
           ),
-          Expanded(
-            child:           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Order Token",
-                style: TextStyle(
-                    fontSize: 21,
-                    color: Colors.brown[800],
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1),
-              ),
-              Text(
-                "Selected Item: ${uniqueItem}",
-                style: TextStyle(
-                    fontSize: 17, color: Colors.brown[800], letterSpacing: 1),
-              ),
-              Text(
-                "Total Items : ${totalItem}",
-                style: TextStyle(
-                    fontSize: 17, color: Colors.brown[800], letterSpacing: 1),
-              ),
-              Text(
-                "Total Price:${totalPrice}",
-                style: TextStyle(
-                    fontSize: 17, color: Colors.brown[800], letterSpacing: 1),
-              ),
-              Text(
-                "Cash On Delivery",
-                style: TextStyle(
-                    fontSize: 17, color: Colors.brown[800], letterSpacing: 1),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+          
+        ],
+      ),
+    );
+  }
+}
+
+/*
               InkWell(
                 onTap: (){
                   print("order to proceed");
@@ -119,15 +126,10 @@ class OrderToken extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-          ),
-        
-          ),
-        ],
-      ),
-    );
-  }
-}
+            
+*/
+
+
 
 
 

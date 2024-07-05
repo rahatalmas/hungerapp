@@ -38,7 +38,7 @@ class CartItemCard extends StatelessWidget {
       child: Row(
         children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(10),
               child: Image.network(
                 foodPicture,
                 width: (MediaQuery.of(context).size.width*30)/100,

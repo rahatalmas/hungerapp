@@ -82,7 +82,47 @@ class _CartItems extends State<CartItems> {
                                 totalPrice: cartList.getTotalPrice().toInt(),
                               ),
 
-                              ListView.builder(
+                             const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.list
+                                        ),
+                                        Text("Cart Items")
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text("X "),
+                                        Text("Clear List")
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 5,),
+                              cartList.cartLength == 0 ?
+                              Container(
+                                height: MediaQuery.of(context).size.height-400,
+                                width: MediaQuery.of(context).size.width,
+                                margin: EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors.orange[200],
+                                  borderRadius: BorderRadius.circular(15),
+                                  //border: Border.all(color: Colors.brown,width: 2)
+                                ),
+                                child: const Center(
+                                  child: Text("No Items In Cart"),
+                                ),
+                              )
+                              :
+                              Column(children: [
+                                ListView.builder(
                                   physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: cartList.cartLength,
@@ -103,8 +143,7 @@ class _CartItems extends State<CartItems> {
                                       }, 
                                       removeFromCart: ()=>{print("remove")}
                                     );
-                                  }),
-                              
+                                  }),                              
                               //order button
                               InkWell(
                                 child: Container(
@@ -152,6 +191,8 @@ class _CartItems extends State<CartItems> {
                                   cartList.clearList();
                                 },
                               )
+                            
+],)
                             ]);
                   })
                       

@@ -253,7 +253,7 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                 Container(
                                     height:
                                         MediaQuery.of(context).size.height / 2 -
-                                            30,
+                                            70,
                                     width: MediaQuery.of(context).size.width,
                                     alignment: Alignment.center,
                                     padding: EdgeInsets.all(10),

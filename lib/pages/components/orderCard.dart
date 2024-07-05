@@ -56,7 +56,7 @@ class _OrderCard extends State<OrderCard> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 150,
+      //height: 150,
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
@@ -72,7 +72,7 @@ class _OrderCard extends State<OrderCard> {
             child: Image.network(
               widget.foodImage,
               width: (MediaQuery.of(context).size.width*30)/100,
-              height: 125,
+              height: 120,
               fit: BoxFit.cover,
             ),
           ),
@@ -96,20 +96,20 @@ class _OrderCard extends State<OrderCard> {
                 Text(
                 widget.userName,
                 style:
-                    const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                    const TextStyle(fontSize: 15),
               ),
               Text(
 
                 widget.userLocation,
                 style:
-                    const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                    const TextStyle(fontSize: 13),
                 maxLines: 2,
               ),
               ],),
               Text(
                 widget.userContact,
                 style:
-                    const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                    const TextStyle(fontSize: 13),
               ),
               const SizedBox(
                 height: 5,
