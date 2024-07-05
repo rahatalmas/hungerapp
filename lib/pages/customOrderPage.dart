@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hunger/apiControllers/postorder.dart';
-import 'package:hunger/dataModels/cartItemModel.dart';
 import 'package:hunger/dataModels/orderModel.dart';
-import 'package:hunger/dataModels/user.dart';
 import 'package:hunger/dataModels/userModel.dart';
-import 'package:hunger/globalStates/LoginInfoProvider.dart';
 import 'package:hunger/apiControllers/getUser.dart';
 import 'package:hunger/globalStates/mealprovider.dart';
 import 'package:hunger/globalStates/userAuthProvider.dart';

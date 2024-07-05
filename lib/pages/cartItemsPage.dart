@@ -82,43 +82,57 @@ class _CartItems extends State<CartItems> {
                                 totalPrice: cartList.getTotalPrice().toInt(),
                               ),
 
-                             const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                             Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(
-                                          Icons.list
+                                        const Icon(
+                                          Icons.list,
+                                          //size: 25,
                                         ),
-                                        Text("Cart Items")
+                                        SizedBox(width: 5,),
+                                        Text("Cart Items",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color:Colors.brown[900]),)
                                       ],
                                     ),
-                                    Row(
-                                      children: [
-                                        Text("X "),
-                                        Text("Clear List")
-                                      ],
+                                    InkWell(
+                                      splashColor: Colors.orange[200],
+                                      onTap: cartList.clearList,
+                                      child:  Row(
+                                        children: [
+                                          Text("X ",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color:Colors.brown[900]),),
+                                          Text("Clear List",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color:Colors.brown[900]),)
+                                        ],
+                                      ),
                                     )
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 5,),
+                              const SizedBox(height: 5,),
                               cartList.cartLength == 0 ?
                               Container(
-                                height: MediaQuery.of(context).size.height-400,
+                                height: MediaQuery.of(context).size.height-375,
                                 width: MediaQuery.of(context).size.width,
-                                margin: EdgeInsets.symmetric(horizontal: 10),
+                                margin: const EdgeInsets.symmetric(horizontal: 10),
                                 decoration: BoxDecoration(
                                   color: Colors.orange[200],
                                   borderRadius: BorderRadius.circular(15),
                                   //border: Border.all(color: Colors.brown,width: 2)
                                 ),
-                                child: const Center(
-                                  child: Text("No Items In Cart"),
-                                ),
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,   
+                                    children: [
+                                    Image.asset(
+                                      "assets/cart.png",
+                                      width: (MediaQuery.sizeOf(context).width*50)/100,
+                                    ),
+                                    const Text("No Item In Cart",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Color.fromARGB(255, 53, 30, 21)),),
+                                   ],
+                                  ),
                               )
                               :
                               Column(children: [
