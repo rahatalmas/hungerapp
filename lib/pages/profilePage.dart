@@ -85,7 +85,11 @@ class _ProfilePageState extends State<ProfilePage>{
                       decoration: BoxDecoration(
                           color: Colors.orange[200],
                           borderRadius: BorderRadius.circular(15)),
-                      child: Row(
+                      child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
 
                         children: [
                           Expanded(
@@ -93,14 +97,13 @@ class _ProfilePageState extends State<ProfilePage>{
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
                                 ClipRRect(
                                     borderRadius: BorderRadius.circular(50),
                                     child: _userData!.user_picture != null
                                         ? Image.network(
                                             _userData!.user_picture!,
-                                            height: 100,
-                                            width: 100,
+                                            height: MediaQuery.of(context).size.width*27/100,
+                                            width: MediaQuery.of(context).size.width*27/100,
                                             fit: BoxFit.cover,
                                           )
                                         : Image.asset(
@@ -109,25 +112,18 @@ class _ProfilePageState extends State<ProfilePage>{
                                             width: 100,
                                             fit: BoxFit.cover,
                                           )),
-                                Text(_userData!.user_name),
-                                Text(_userData!.user_email),
-                                
                               ],
                             ),
                           ),
                           Expanded(
-                            flex: 1,
+                            flex: 2,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [  
-                                Text(
-                                  "Budget "+_userData!.user_budget.toString()
-                                ),
-                                SizedBox(height: 10,),
-                                Row(
+                               Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Column(
                                   children: [
@@ -135,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage>{
                                     Text(getPendingOrders().length.toString())
                                   ],
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Column(
@@ -145,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage>{
                                         getNotPendingOrders().length.toString())
                                   ],
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Column(
@@ -153,80 +149,42 @@ class _ProfilePageState extends State<ProfilePage>{
                                     Text("Total"),
                                     Text(_orders.length.toString())
                                   ],
-                                )
-                              ],
-                            ),
-                                SizedBox(height: 10,),
-
-                                Row(
-                                  children: [
-                                  InkWell(
-                                  onTap: () {
-                                    handleLogout();
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 5),
-                                    decoration: const BoxDecoration(
-                                      color: Color.fromARGB(255, 235, 191, 111),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                    ),
-                                    child: const Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Edit Profile",
-                                          style: const TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w500,
-                                              color: Color.fromARGB(
-                                                  255, 31, 29, 29)),
-                                        ), //SizedBox(width: 3,),
-                                      ],
-                                    ),
-                                  ),
                                 ),
-                                SizedBox(width: 10,),
-                                InkWell(
-                                  onTap: () {
-                                    print("edit");
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 5),
-                                    decoration: const BoxDecoration(
-                                      color: Color.fromARGB(255, 235, 191, 111),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                    ),
-                                    child: const Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Logout",
-                                          style: const TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w500,
-                                              color: Color.fromARGB(
-                                                  255, 31, 29, 29)),
-                                        ), //SizedBox(width: 3,),
-                                      ],
-                                    ),
-                                  ),
-                                )
+                              ],
+
+                            ),
                               
-                              
-                                ],)
 
                               ],
                             )
                           )
                         ],
                       ),
+                      SizedBox(height: 10,),
+                      Text(_userData!.user_name),
+                      Text(_userData!.user_location),
+                      SizedBox(height: 10,),
+
+                      InkWell(
+                        onTap: (){
+                          print("edit");
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.all(5),
+                          decoration:const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color:Color.fromARGB(255, 60, 63, 33),
+                          ),
+                          child:const Text("edit profile",style: TextStyle(color: Color.fromARGB(255, 245, 245, 245)),),
+                        ),
+                      )
+                        ],
+                      )
                     ),
+
+
                     SizedBox(height: 10,),
                     
                     Container(

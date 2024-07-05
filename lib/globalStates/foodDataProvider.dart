@@ -3,7 +3,7 @@ import 'package:hunger/apiControllers/getfoods.dart';
 import 'package:hunger/dataModels/foodModel.dart';
 
 class FoodListProvider extends ChangeNotifier {
-  late List<FoodModel> _foodList;
+  List<FoodModel> _foodList = [];
   
   List<FoodModel> get allFoods => _foodList;
   
