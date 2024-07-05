@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hunger/globalStates/foodDataProvider.dart';
 import 'package:hunger/globalStates/mealprovider.dart';
 import 'package:hunger/globalStates/userAuthProvider.dart';
 import 'package:hunger/rootpage.dart';
@@ -11,6 +12,7 @@ void main() {
      MultiProvider(
          providers:[
            ChangeNotifierProvider(create: (context)=>UserAuthProvider()),
+           ChangeNotifierProvider(create: (context)=>FoodDataProvider()),
            ChangeNotifierProvider(create: (context)=>CartItemProvider()),
            ChangeNotifierProvider(create: (context)=>MealItemProvider()),
          ],
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    final MediaQueryData data = MediaQuery.of(context);
+    //final MediaQueryData data = MediaQuery.of(context);
     final userAuth = Provider.of<UserAuthProvider>(context);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
         ),
         
         home: userAuth.authData.token == null ? 
-         LoginPage()
+         const LoginPage()
            :
          Root(),
         );
