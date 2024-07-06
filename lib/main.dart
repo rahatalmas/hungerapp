@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hunger/globalStates/foodDataProvider.dart';
+import 'package:hunger/globalStates/hotelProvider.dart';
 import 'package:hunger/globalStates/mealprovider.dart';
 import 'package:hunger/globalStates/userAuthProvider.dart';
 import 'package:hunger/rootpage.dart';
@@ -13,6 +14,7 @@ void main() {
          providers:[
            ChangeNotifierProvider(create: (context)=>UserAuthProvider()),
            ChangeNotifierProvider(create: (context)=>FoodListProvider()),
+           ChangeNotifierProvider(create: (context)=>hotelListProvider()),
            ChangeNotifierProvider(create: (context)=>CartItemProvider()),
            ChangeNotifierProvider(create: (context)=>MealItemProvider()),
          ],

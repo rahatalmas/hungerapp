@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hunger/dataModels/hotelModel.dart';
+import 'package:hunger/globalStates/hotelProvider.dart';
 import 'package:hunger/pages/customOrderPage.dart';
+import 'package:provider/provider.dart';
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
@@ -8,8 +11,27 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  
+ bool _isLoading = false;
+  @override
+  void initState() {
+    super.initState();
+    hotelListGetter();
+  }
+
+  hotelListGetter() async{
+    _isLoading = true;
+    final hotelDataProvider = Provider.of<hotelListProvider>(context,listen:false);
+    hotelDataProvider.loadAllhotels();
+    setState((){
+      _isLoading = false;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    final hotelProvider = Provider.of<hotelListProvider>(context);
     return Scaffold(
       backgroundColor: Colors.orange[100],
       body: ListView(children: [
@@ -144,9 +166,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       //alignment: AlignmentDirectional.topCenter,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/avo.gif",
-                          scale: 6,
+                         Image.asset(
+                          "assets/soup.png",
+                          height: 50,width: 50,
+                          fit: BoxFit.cover,
                         ),
                         Text(
                           "Breakfast",
@@ -172,8 +195,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/avo.gif",
-                          scale: 6,
+                          "assets/head.png",
+                          height: 50,width: 50,
+                          fit: BoxFit.cover,
                         ),
                         Text(
                           "Lunch",
@@ -199,8 +223,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/avo.gif",
-                          scale: 6,
+                          "assets/murighanta.png",
+                          height: 50,width: 50,
+                          fit: BoxFit.cover,
                         ),
                         Text(
                           "Dinner",
@@ -226,8 +251,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/avo.gif",
-                          scale: 6,
+                          "assets/pizza.png",
+                          height: 50,width: 50,
+                          fit: BoxFit.cover,
                         ),
                         Text(
                           "FastFood",
@@ -393,7 +419,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       flex: 1,
                       child:ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: Image.asset("assets/shopimage.png",width:MediaQuery.of(context).size.width,fit: BoxFit.cover,),
+                        child: Image.network(hotelProvider.allhotels[index].hotelPicture!,width:MediaQuery.of(context).size.width,height:100,fit: BoxFit.cover,),
                       )
                       //
                     ),
@@ -404,17 +430,19 @@ class _MyHomePageState extends State<MyHomePage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Burger Shop",style: TextStyle(
+                          Text(hotelProvider.allhotels[index].hotelName,style: TextStyle(
                               fontSize: 25,
                               color: Colors.brown[500],
                               letterSpacing: 1
                           ),),
-                          Text("Experience The Ultimate taste of Burger",style: TextStyle(
+                          Text(hotelProvider.allhotels[index].hotelDescription,style: TextStyle(
                               fontSize: 15,
                               color: Colors.brown[400],
                               letterSpacing: 0
                           ),),
-                          Text("Ashulia Khagan",style: TextStyle(
+                          Text(hotelProvider.allhotels[index].hotelContact == null ? "No Contact Info":
+                          hotelProvider.allhotels[index].hotelContact!
+                          ,style: TextStyle(
                               fontSize: 14,
                               color: Colors.brown[400],
                               letterSpacing: 0
@@ -426,7 +454,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               );
             },
-            itemCount: 3,
+            itemCount: hotelProvider.allhotels.length,
           ),
         )
       ]),

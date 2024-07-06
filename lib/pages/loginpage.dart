@@ -1,10 +1,4 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hunger/apiControllers/login.dart';
-import 'package:hunger/dataModels/userModel.dart';
-import 'package:hunger/globalStates/LoginInfoProvider.dart';
 import 'package:hunger/globalStates/userAuthProvider.dart';
 import 'package:hunger/pages/registerPage.dart';
 import 'package:provider/provider.dart';
@@ -165,8 +159,7 @@ class _LoginPage extends State<LoginPage> {
                               final loginRes = userAuthProvider.loginUser(user_name_controller.text, user_password_controller.text);
                               loginRes.then((response){
                                 print(userAuthProvider.authData.message);
-                                print(userAuthProvider.authData.token);
-                                print(userAuthProvider.statusCode);
+                                print(userAuthProvider.statusCode);                     
                               });
                             }
                           },

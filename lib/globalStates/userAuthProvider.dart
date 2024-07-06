@@ -8,6 +8,7 @@ class UserAuthProvider with ChangeNotifier{
   UserAuth authData = UserAuth();
   bool isLoading = false;
   int statusCode = 0;
+  
   registerUser(
     String userName, 
     String userEmail,
@@ -55,6 +56,33 @@ class UserAuthProvider with ChangeNotifier{
     ).then(onValue).catchError(onError);
   }
 
+  updateUser(
+    String userName, 
+    String userEmail,
+    String userContact,
+    String userPicture,
+    String userLocation,
+    int userId
+    )async{
+    isLoading = true;
+    notifyListeners();
+    
+    final Map<String,dynamic> updateData = {
+      "user_name":userName.trim(),
+      "user_email":userEmail.trim(),
+      "user_contact":userContact.trim(),
+      "user_picture":userPicture.trim(),
+      "user_location":userLocation.trim()
+    };
+    return await put(
+      Uri.parse("http://192.168.0.106:5000/user/update/$userId"),
+      body: jsonEncode(updateData),
+      headers: {
+          'Content-Type': 'application/json',
+        }
+      ).then(onValue).catchError(onError);
+  }
+  
   Future<FutureOr>onValue(Response response)async{
     String? result;
     final Map<String,dynamic> responseData = json.decode(response.body);

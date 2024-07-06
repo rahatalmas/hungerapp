@@ -5,6 +5,7 @@ import 'package:hunger/dataModels/userModel.dart';
 import 'package:hunger/dataModels/orderModel.dart';
 import 'package:hunger/globalStates/userAuthProvider.dart';
 import 'package:hunger/pages/components/orderCard.dart';
+import 'package:hunger/pages/editProfilePage.dart';
 import 'package:provider/provider.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
@@ -167,7 +168,11 @@ class _ProfilePageState extends State<ProfilePage>{
 
                       InkWell(
                         onTap: (){
-                          print("edit");
+                          Navigator.push(
+                            context, MaterialPageRoute(
+                              builder: (BuildContext context)=>EditProfile()
+                            )
+                          );
                         },
                         child: Container(
                           alignment: Alignment.center,
