@@ -4,7 +4,7 @@ import 'package:hunger/apiControllers/postorder.dart';
 import 'package:hunger/dataModels/userModel.dart';
 import 'package:hunger/dataModels/orderModel.dart';
 import 'package:hunger/globalStates/userAuthProvider.dart';
-import 'package:hunger/pages/components/orderCard.dart';
+import 'package:hunger/pages/components/OrderStatusCard.dart';
 import 'package:hunger/pages/editProfilePage.dart';
 import 'package:provider/provider.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -66,6 +66,7 @@ class _ProfilePageState extends State<ProfilePage>{
   List<Order> getNotPendingOrders() {
     return _orders.where((order) => order.orderStatus).toList();
   }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +80,7 @@ class _ProfilePageState extends State<ProfilePage>{
                   child: Column(
                   children: [
                     SizedBox(height: 10,),
+                    //card
                     Container(
                       padding: EdgeInsets.all(10),
                       margin:EdgeInsets.symmetric(horizontal: 10, vertical: 0),
@@ -103,8 +105,8 @@ class _ProfilePageState extends State<ProfilePage>{
                                     child: _userData!.user_picture != null
                                         ? Image.network(
                                             _userData!.user_picture!,
-                                            height: MediaQuery.of(context).size.width*27/100,
-                                            width: MediaQuery.of(context).size.width*27/100,
+                                            height: MediaQuery.of(context).size.width*20/100,
+                                            width: MediaQuery.of(context).size.width*20/100,
                                             fit: BoxFit.cover,
                                           )
                                         : Image.asset(
@@ -188,16 +190,14 @@ class _ProfilePageState extends State<ProfilePage>{
                         ],
                       )
                     ),
-
-
                     SizedBox(height: 10,),
-                    
+                    //menu
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: 10,vertical: 0),
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(  
                         color: Colors.orange[200],   
-                        borderRadius: BorderRadius.circular(15)             
+                        borderRadius: BorderRadius.circular(15)            
                       ),
                       child:Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -210,12 +210,12 @@ class _ProfilePageState extends State<ProfilePage>{
                                 tabView = 0;
                               });
                             },
-                            child: Row(
+                            child:const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                               Icon(Icons.pending),
-                              Text("Pending")
+                              Text("Pending",)
                             ],),
                           ),
                           ),
@@ -273,6 +273,7 @@ class _ProfilePageState extends State<ProfilePage>{
                     ),
                     
                     SizedBox(height: 5,),
+                    //list
                     Container(
                       child: ListView.builder(
                       shrinkWrap: true,
@@ -280,7 +281,36 @@ class _ProfilePageState extends State<ProfilePage>{
                       itemCount: tabView == 0 ? getPendingOrders().length:getNotPendingOrders().length,
                       itemBuilder: (context, index) {
                         Order order = tabView== 0? getPendingOrders()[index]:getNotPendingOrders()[index];
-                        return OrderCard(
+                        return OrderStatusCard(
+                          orderId: order.orderId,
+                          foodName: order.food.foodName, 
+                          foodPicture: order.food.foodPicture, 
+                          date: order.orderTime, 
+                          category: order.food.foodCategory, 
+                          hotelName: order.food.foodProvider.hotelName,    
+                          price: order.food.foodPrice.toInt(), 
+                          quantity: order.quantity, 
+                          deliveryStatus: order.orderStatus,
+                          deliveryLocation: order.deliveryLocation,
+                          fetchData: fetchData
+                        );
+                      },
+                    )),
+                  ],
+                ))
+              : const Center(
+                  child: Text('User data not available'),
+                ),
+    );
+  }
+}
+
+
+
+
+
+/**
+ * OrderCard(
                             foodImage: order.food.foodPicture,
                             foodName: order.food.foodName,
                             foodQuantity: order.quantity,
@@ -294,20 +324,11 @@ class _ProfilePageState extends State<ProfilePage>{
                             orderId: order.orderId,
                             fetchData: fetchData,
                             orderStat: order.orderStatus);
-                      },
-                    )),
-                  ],
-                ))
-              : Center(
-                  child: Text('User data not available'),
-                ),
-    );
-  }
-}
-
-
-
-/**
+                        
+ * 
+ * 
+ * 
+ * 
  *                     Row(
                       children: [Text("Pending Orders")],
                     ),

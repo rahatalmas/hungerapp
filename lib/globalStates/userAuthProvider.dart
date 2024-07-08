@@ -37,13 +37,13 @@ class UserAuthProvider with ChangeNotifier{
       ).then(onValue).catchError(onError);
   }
   
-  loginUser(String userName, String password) async{
+  loginUser(String userEmail, String password) async{
     isLoading = true;
     ChangeNotifier();
     //notifyListeners();
 
     final Map<String,dynamic> loginData = {
-      "user_name":userName.trim(),
+      "user_email":userEmail.trim(),
       "user_password":password.trim()
     };
 

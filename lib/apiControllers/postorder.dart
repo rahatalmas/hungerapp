@@ -31,6 +31,7 @@ Future<List<Order>> fetchOrdersByUserId(int userId) async {
 
   if(response.statusCode == 200){
     List<dynamic> jsonData = jsonDecode(response.body);
+    print(jsonData);
     List<Order> orders = jsonData.map((json)=>Order.fromJson(json)).toList();
     return orders;
   } else {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hunger/dataModels/hotelModel.dart';
 import 'package:hunger/globalStates/hotelProvider.dart';
 import 'package:hunger/pages/customOrderPage.dart';
 import 'package:provider/provider.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final String title;

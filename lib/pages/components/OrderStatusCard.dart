@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hunger/apiControllers/postorder.dart';
 
-class CartItemCard extends StatelessWidget {
-  CartItemCard(
+class OrderStatusCard extends StatelessWidget {
+  OrderStatusCard(
     {
       super.key,
+      required this.orderId,
       required this.foodName,
       required this.foodPicture,
       required this.date,
@@ -11,11 +13,12 @@ class CartItemCard extends StatelessWidget {
       required this.hotelName,
       required this.price,
       required this.quantity,
-      required this.incQuantity,
-      required this.decQuantity,
-      required this.removeFromCart,
+      required this.deliveryStatus,
+      required this.deliveryLocation,
+      required this.fetchData,
     }
   );
+  int orderId;
   String foodName;
   String foodPicture;
   DateTime date;
@@ -23,9 +26,9 @@ class CartItemCard extends StatelessWidget {
   String hotelName;
   int price;
   int quantity;
-  Function() incQuantity;
-  Function() decQuantity;
-  final VoidCallback removeFromCart;
+  String deliveryLocation;
+  bool deliveryStatus;
+  Function() fetchData;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,60 +40,63 @@ class CartItemCard extends StatelessWidget {
       decoration: BoxDecoration(color: Colors.orange[200], borderRadius: BorderRadius.circular(10)),
       child: Row(
         children: [
-            ClipRRect(
+          //image
+          ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
                 foodPicture,
                 width: (MediaQuery.of(context).size.width*30)/100,
-                height: 100,
+                height: (MediaQuery.of(context).size.width*25)/100,
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(width: 10,),
+          SizedBox(width: 10,),
+          //data
           Expanded(
             child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(foodName, 
+              Row(
+                crossAxisAlignment:CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                Text(foodName.length>10?"${foodName.substring(0,7)}..":foodName, 
                     style: const TextStyle(
-                      fontSize: 17, fontWeight: FontWeight.w500),
+                      fontSize: 16, fontWeight: FontWeight.w500),
               ),
-              Text(hotelName),
+              Text("Pending", 
+                    style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500,color: Colors.green),
+              ),
+              ],),
+              
+              Text(deliveryLocation,style: TextStyle(fontSize: 13),),
+              Text(hotelName,style: TextStyle(fontSize: 10),),
               Row(
                 children: [
                   Text(date.day.toString()+"-"+date.month.toString()+"-"+date.year.toString()+" | ",style: TextStyle(fontSize: 10),),
-                  Text(category,style: TextStyle(fontSize: 12),)
+                  Text(category,style: TextStyle(fontSize: 10),)
                 ],),
-              Text("Tatal: $price x $quantity = ${price*quantity}"),
+              Text("Tatal: $price x $quantity = ${price*quantity}",style: TextStyle(fontSize: 13),)
             ],
-          )),
-
-          //buttons
-          Column(
-            children: [
-              InkWell(
-                onTap: incQuantity,
-                child: Container(
-                  child: Icon(Icons.add),
-                ),
-              ),
-              Text(quantity.toString()),
-              InkWell(
-                onTap: decQuantity,
-                child: Container(
-                  child: Icon(Icons.remove),
-                ),
-              ),
-            
-            ],
+          )
           ),
+          //buttons
           SizedBox(width: 10,),
-
-          Column(
-            children: [
-              InkWell(
-                onTap: removeFromCart,
+          InkWell(
+                onTap: (){
+                      updateOrderStatus(orderId,true);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.brown[900],
+                            
+                            content: Text("Enjoy Your Meal",style: TextStyle(color: Colors.white),)
+                        )
+                      );
+                      fetchData();
+                
+                },
                 child: Container(
                    padding: EdgeInsets.fromLTRB(7, 25, 0, 25),
                   //height: MediaQuery.of(context).size.height,
@@ -103,9 +109,6 @@ class CartItemCard extends StatelessWidget {
                   child: Icon(Icons.delete_forever_outlined,),
                 ),
               )
-            ],
-          )
-        
         ],
       ),
     );

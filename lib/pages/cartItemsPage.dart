@@ -114,9 +114,9 @@ class _CartItems extends State<CartItems> {
                               const SizedBox(height: 5,),
                               cartList.cartLength == 0 ?
                               Container(
-                                height: MediaQuery.of(context).size.height-375,
+                                height: MediaQuery.of(context).size.width*65/100,
                                 width: MediaQuery.of(context).size.width,
-                                margin: const EdgeInsets.symmetric(horizontal: 10),
+                                margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                                 decoration: BoxDecoration(
                                   color: Colors.orange[200],
                                   borderRadius: BorderRadius.circular(15),
@@ -129,13 +129,15 @@ class _CartItems extends State<CartItems> {
                                     Image.asset(
                                       "assets/cart.png",
                                       width: (MediaQuery.sizeOf(context).width*50)/100,
-                                      //height: MediaQuery.of(context).size.height-400,
+                                      height: MediaQuery.of(context).size.width*50/100,
+                                      fit: BoxFit.cover,
                                       
                                     ),
                                     const Text("No Item In Cart",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Color.fromARGB(255, 53, 30, 21)),),
                                    ],
                                   ),
                               )
+                              
                               :
                               Column(children: [
                                 ListView.builder(
@@ -192,6 +194,7 @@ class _CartItems extends State<CartItems> {
                                       orderedFoodId: cartList
                                           .cartItems[i].food_model.foodId,
                                       quantity: cartList.cartItems[i].quantity,
+                                      deliveryLocation: _userData!.user_location,
                                       time: cartList.cartItems[i].date,
                                     );
 

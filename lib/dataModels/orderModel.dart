@@ -1,52 +1,17 @@
-//import 'package:hunger/dataModels/foodModel.dart';
-class FoodModel {
-  final int foodId;
-  final String foodName;
-  final double foodPrice;
-  final String foodCategory;
-  final bool foodInStock;
-  final String foodDescription;
-  final String foodPicture;
-  final int? foodReview;
-  final int foodProviderId;
-
-  FoodModel({
-    required this.foodId,
-    required this.foodName,
-    required this.foodPrice,
-    required this.foodCategory,
-    required this.foodInStock,
-    required this.foodDescription,
-    required this.foodPicture,
-    required this.foodReview,
-    required this.foodProviderId,
-  });
-
-  factory FoodModel.fromJson(Map<String, dynamic> json) {
-    return FoodModel(
-      foodId: json['food_id'] as int,
-      foodName: json['food_name'] as String,
-      foodPrice: double.parse(json['food_price'] as String),
-      foodCategory: json['food_category'] as String,
-      foodInStock: json['food_instock'] as bool,
-      foodDescription: json['food_description'] as String,
-      foodPicture: json['food_picture'] as String,
-      foodReview: json['food_review'] as int?,
-      foodProviderId: json['food_provider_id'] as int,
-    );
-  }
-}
+import 'package:hunger/dataModels/foodModel.dart';
 
 class OrderPost {
   int orderedUserId;
   int orderedFoodId;
   int quantity;
+  String deliveryLocation;
   DateTime time;
 
   OrderPost({
     required this.orderedUserId,
     required this.orderedFoodId,
     required this.quantity,
+    required this.deliveryLocation,
     required this.time,
   });
 
@@ -54,6 +19,7 @@ class OrderPost {
         'ordered_user_id': orderedUserId,
         'ordered_food_id': orderedFoodId,
         'quantity': quantity,
+        'delivery_location':deliveryLocation,
         'order_time': time.toIso8601String(),
       };
 }
@@ -63,6 +29,7 @@ class Order {
   final int orderedUserId;
   final int orderedFoodId;
   final int quantity;
+  final String deliveryLocation;
   final bool orderStatus;
   final DateTime orderTime;
   final FoodModel food;
@@ -72,6 +39,7 @@ class Order {
     required this.orderedUserId,
     required this.orderedFoodId,
     required this.quantity,
+    required this.deliveryLocation,
     required this.orderStatus,
     required this.orderTime,
     required this.food,
@@ -83,6 +51,7 @@ class Order {
       orderedUserId: json['ordered_user_id'] as int,
       orderedFoodId: json['ordered_food_id'] as int,
       quantity: json['quantity'] as int,
+      deliveryLocation: json['delivery_location'] as String,
       orderStatus: json['order_status'] as bool,
       orderTime: DateTime.parse(json['order_time'] as String),
       food: FoodModel.fromJson(json['food_info'] as Map<String, dynamic>),

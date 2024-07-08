@@ -20,7 +20,7 @@ class _OrderPage extends State<OrderPage>{
           Icon(Icons.restaurant_outlined),
           SizedBox(width: 10,),
         ],
-        backgroundColor: Colors.orange[200],
+        backgroundColor: Colors.orange[300],
       ),
       body: SingleChildScrollView(
         child: Column(

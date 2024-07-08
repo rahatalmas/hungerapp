@@ -470,6 +470,7 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                               orderedUserId: _userdata!.user_id,
                                               orderedFoodId: cartList.mealItems[i].food_model.foodId,
                                               quantity: cartList.mealItems[i].quantity,
+                                              deliveryLocation: _userdata!.user_location,
                                               time: cartList.mealItems[i].date,
                                             );
 
