@@ -135,7 +135,7 @@ class _FoodDetails extends State<FoodDetails> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder:(context)=>OrderPage()
+                                          builder:(context)=>OrderPage(userId: 5, userName: "pretty",orderLocation: "narayangang",)
                                       )
                                   );
                                 },

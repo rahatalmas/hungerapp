@@ -5,6 +5,7 @@ import 'package:hunger/globalStates/cartItemProvider.dart';
 import 'package:hunger/globalStates/userAuthProvider.dart';
 import 'package:hunger/pages/components/cartItemCard.dart';
 import 'package:hunger/pages/components/orderToken.dart';
+import 'package:hunger/pages/orderpage.dart';
 import 'package:provider/provider.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:hunger/apiControllers/getUser.dart';
@@ -184,30 +185,11 @@ class _CartItems extends State<CartItems> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                onTap: () async {
+                                onTap: () {
                         
-                                  for (int i = 0;
-                                      i < cartList.cartItems.length;
-                                      i++) {
-                                    OrderPost order = OrderPost(
-                                      orderedUserId: _userData!.user_id,
-                                      orderedFoodId: cartList
-                                          .cartItems[i].food_model.foodId,
-                                      quantity: cartList.cartItems[i].quantity,
-                                      deliveryLocation: _userData!.user_location,
-                                      time: cartList.cartItems[i].date,
-                                    );
-
-                                    try {
-                                      await postOrder(order);
-                                      print(
-                                          'Order placed successfully for item $i');
-                                    } catch (e) {
-                                      print(
-                                          'Failed to place order for item $i: $e');
-                                    }
-                                  }
-                                  cartList.clearList();
+                                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                                    return OrderPage(userId: _userData!.user_id, userName: _userData!.user_name, orderLocation: _userData!.user_location);
+                                  }));
                                 },
                               )
                             
