@@ -5,6 +5,7 @@ import 'package:hunger/dataModels/userModel.dart';
 import 'package:hunger/apiControllers/getUser.dart';
 import 'package:hunger/globalStates/mealprovider.dart';
 import 'package:hunger/globalStates/userAuthProvider.dart';
+import 'package:hunger/pages/components/cartItemCard.dart';
 import 'package:hunger/pages/components/customorderfoodlist.dart';
 import 'package:provider/provider.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -251,16 +252,134 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                             70,
                                     width: MediaQuery.of(context).size.width,
                                     alignment: Alignment.center,
-                                    padding: EdgeInsets.all(10),
+                                    padding: EdgeInsets.symmetric(horizontal: 0,vertical:5),
                                     decoration: BoxDecoration(
-                                        color: Colors.orange[200],
+                                        
                                         borderRadius:
-                                            BorderRadius.circular(15)),
+                                            BorderRadius.circular(15),
+                                            border: Border.all(width: 2,color:const Color.fromARGB(255, 56, 31, 21))),
                                     child: ListView.builder(
                                         itemCount: cartList.mealItemsLength,
                                         itemBuilder: (context, index) {
                                           //meal card
-                                          return Container(
+                                          return CartItemCard(
+                                            foodName: cartList.mealItems[index].food_model.foodName, 
+                                            foodPicture: cartList.mealItems[index].food_model.foodPicture,
+                                            date: cartList.mealItems[index].date,
+                                            category: cartList.mealItems[index].food_model.foodCategory, 
+                                            hotelName: cartList.mealItems[index].food_model.foodProvider.hotelName, 
+                                            price: cartList.mealItems[index].food_model.foodPrice.toInt(), 
+                                            quantity: cartList.mealItems[index].quantity, 
+                                            incQuantity: (){cartList.addQuantity(index);},
+                                            decQuantity: (){cartList.subQuantity(index);}, 
+                                            removeFromCart:(){print("delete");});
+                                        })),
+
+                                //buttons
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: InkWell(
+                                        onTap: () async {
+                                          for (int i = 0;i < cartList.mealItems.length;i++) {
+                                            OrderPost order = OrderPost(
+                                              orderedUserId: _userdata!.user_id,
+                                              orderedFoodId: cartList.mealItems[i].food_model.foodId,
+                                              quantity: cartList.mealItems[i].quantity,
+                                              deliveryLocation: _userdata!.user_location,
+                                              time: cartList.mealItems[i].date,
+                                            );
+                                            try {
+                                              await postOrder(order);
+                                              print(
+                                                  'Order placed successfully for item $i');
+                                            } catch (e) {
+                                              print(
+                                                  'Failed to place order for item $i: $e');
+                                            }
+                                          }
+                                          cartList.resetList();
+                                        },
+                                        child: Container(
+                                            alignment: Alignment.center,
+                                            padding: EdgeInsets.all(15),
+                                            margin: EdgeInsets.fromLTRB(0, 10, 5, 0),
+                                            decoration: BoxDecoration(
+                                                color: Colors.green,
+                                                borderRadius:BorderRadius.circular(10)),
+                                            child: const Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.delete,
+                                                  color: Colors.white,
+                                                ),
+                                                Text(
+                                                  "Order Proceed",
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white),
+                                                ),
+                                              ],
+                                            )),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: InkWell(
+                                        onTap: () {
+                                          cartList.resetList();
+                                        },
+                                        child: Container(
+                                            alignment: Alignment.center,
+                                            padding:const EdgeInsets.all(15),
+                                            margin: const EdgeInsets.fromLTRB(
+                                                5, 10, 0, 0),
+                                            decoration: BoxDecoration(
+                                                color: Colors.red,
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: const Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.delete,
+                                                  color: Colors.white,
+                                                ),
+                                                Text(
+                                                  "Reset All",
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white),
+                                                ),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            )));
+                  }));
+  }
+}
+
+
+/**
+ * 
+ * Container(
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width,
@@ -454,106 +573,6 @@ class _CustomOrderPage extends State<CustomOrderPage> {
                                                   )
                                                 ],
                                               ));
-                                        })),
-
-                                //buttons
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: InkWell(
-                                        onTap: () async {
-                                          for (int i = 0;i < cartList.mealItems.length;i++) {
-                                            OrderPost order = OrderPost(
-                                              orderedUserId: _userdata!.user_id,
-                                              orderedFoodId: cartList.mealItems[i].food_model.foodId,
-                                              quantity: cartList.mealItems[i].quantity,
-                                              deliveryLocation: _userdata!.user_location,
-                                              time: cartList.mealItems[i].date,
-                                            );
-
-                                            try {
-                                              await postOrder(order);
-                                              print(
-                                                  'Order placed successfully for item $i');
-                                            } catch (e) {
-                                              print(
-                                                  'Failed to place order for item $i: $e');
-                                            }
-                                          }
-                                          cartList.resetList();
-                                        },
-                                        child: Container(
-                                            alignment: Alignment.center,
-                                            padding: EdgeInsets.all(15),
-                                            margin: EdgeInsets.fromLTRB(0, 10, 5, 0),
-                                            decoration: BoxDecoration(
-                                                color: Colors.green,
-                                                borderRadius:BorderRadius.circular(10)),
-                                            child: const Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  Icons.delete,
-                                                  color: Colors.white,
-                                                ),
-                                                Text(
-                                                  "Order Proceed",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white),
-                                                ),
-                                              ],
-                                            )),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: InkWell(
-                                        onTap: () {
-                                          cartList.resetList();
-                                        },
-                                        child: Container(
-                                            alignment: Alignment.center,
-                                            padding:const EdgeInsets.all(15),
-                                            margin: const EdgeInsets.fromLTRB(
-                                                5, 10, 0, 0),
-                                            decoration: BoxDecoration(
-                                                color: Colors.red,
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: const Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  Icons.delete,
-                                                  color: Colors.white,
-                                                ),
-                                                Text(
-                                                  "Reset All",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white),
-                                                ),
-                                              ],
-                                            )),
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            )));
-                  }));
-  }
-}
+                                        
+ * 
+ */
