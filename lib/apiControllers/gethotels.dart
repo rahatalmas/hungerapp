@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:hunger/dataModels/hotelModel.dart';
 
 Future<List<Hotel>> getHotels() async{
-  String url = "http://192.168.0.106:5000/hotel";
+  String url = "http://192.168.0.116:5000/hotel";
   final response = await http.get(Uri.parse(url));
   if(response.statusCode == 200){
     List<dynamic> jsonList = jsonDecode(response.body);

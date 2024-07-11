@@ -29,7 +29,7 @@ class UserAuthProvider with ChangeNotifier{
       "user_location":userLocation.trim()
     };
     return await post(
-      Uri.parse("http://192.168.0.106:5000/user/register"),
+      Uri.parse("http://192.168.0.116:5000/user/register"),
       body: jsonEncode(registrationData),
       headers: {
           'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ class UserAuthProvider with ChangeNotifier{
     };
 
     return await post(
-      Uri.parse("http://192.168.0.106:5000/user/login"),
+      Uri.parse("http://192.168.0.116:5000/user/login"),
       body:jsonEncode(loginData),
       headers: {
         'content-Type' : 'application/json'
@@ -75,7 +75,7 @@ class UserAuthProvider with ChangeNotifier{
       "user_location":userLocation.trim()
     };
     final response = await put(
-      Uri.parse("http://192.168.0.106:5000/user/update/$userId"),
+      Uri.parse("http://192.168.0.116:5000/user/update/$userId"),
       body: jsonEncode(updateData),
       headers: {
           'Content-Type': 'application/json',

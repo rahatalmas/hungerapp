@@ -116,6 +116,7 @@ class _EditProfile extends State<EditProfile> {
                                       fit: BoxFit.cover,
                                     ),
                                   )),
+                              
                               Text("Select Image")
                             ],
                           ),
@@ -292,6 +293,7 @@ class _EditProfile extends State<EditProfile> {
                                   
                                 ));
                                 Navigator.pop(context);
+                                fetchData();
                               });
                             },
                             child: Container(

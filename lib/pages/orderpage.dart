@@ -30,8 +30,8 @@ class _OrderPage extends State<OrderPage> {
           onTap: () => Navigator.pop(context),
           child: const Icon(Icons.arrow_back),
         ),
-        title: Text("Order your foods"),
-        actions: [
+        title:const Text("Order your foods"),
+        actions: const [
           Icon(Icons.restaurant_outlined),
           SizedBox(
             width: 10,
@@ -43,26 +43,35 @@ class _OrderPage extends State<OrderPage> {
           child: Padding(
         padding: EdgeInsets.all(10),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-             // margin: EdgeInsets.all(10),
-              decoration: BoxDecoration(color: Colors.orange[200]),
+             padding: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: Colors.orange[200],
+                borderRadius: BorderRadius.circular(15)
+              ),
               child: Column(
                 children: [
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(widget.userName),
                       TextField(
+                        decoration: InputDecoration(label: Text("Order location")),
                         controller: locationController,
                       )
                     ],
                   ),
                   Container(
-                    child: Row(
+                    child:const Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Item Name"),
-                        Text("Quantity"),
-                        Text("price"),
+                        Expanded(flex:2,child: Text("Item Name"),),
+                        Expanded(flex:1,child: Text("Quantity"),),
+                        Expanded(flex:1,child: Text("Price"),),
                       ],
                     ),
                   ),
@@ -73,32 +82,45 @@ class _OrderPage extends State<OrderPage> {
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
                         child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                                orderItems.cartList[index].food_model.foodName),
-                            Text(
-                                orderItems.cartList[index].quantity.toString()),
-                            Text((orderItems.cartList[index].quantity *
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                orderItems.cartList[index].food_model.foodName),),
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                orderItems.cartList[index].quantity.toString()),),
+                            Expanded(
+                              flex: 1,
+                              child: Text((orderItems.cartList[index].quantity *
                                     orderItems
                                         .cartList[index].food_model.foodPrice)
-                                .toString()),
+                                .toString()),)
                           ],
                         ),
                       );
                     },
                   ),
                   Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Total"),
-                        Text(orderItems.getTotalPrice().toString()),
+                        Expanded(flex:2, child:Text("Total")),
+                        Expanded(flex:1, child:Text("")),
+                        Expanded(flex: 1, child: Text(orderItems.getTotalPrice().toString()),)
+                        
                       ],
                     ),
                   ),
                   Container(
                     alignment: Alignment.center,
                     width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.all(10),
+                    margin: EdgeInsets.symmetric(vertical: 10),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 25, vertical: 17),
                     decoration: BoxDecoration(
