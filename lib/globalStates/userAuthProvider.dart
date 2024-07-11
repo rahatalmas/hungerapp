@@ -74,13 +74,21 @@ class UserAuthProvider with ChangeNotifier{
       "user_picture":userPicture.trim(),
       "user_location":userLocation.trim()
     };
-    return await put(
+    final response = await put(
       Uri.parse("http://192.168.0.106:5000/user/update/$userId"),
       body: jsonEncode(updateData),
       headers: {
           'Content-Type': 'application/json',
         }
-      ).then(onValue).catchError(onError);
+      );
+      if(response.statusCode == 200){
+        final Map<String,dynamic> responseData = json.decode(response.body);
+        UserAuth updateInfo = UserAuth.formjson(responseData); 
+        return updateInfo;
+      }else{
+        print("update failed");
+      }
+      //.then(onValue).catchError(onError);
   }
   
   Future<FutureOr>onValue(Response response)async{

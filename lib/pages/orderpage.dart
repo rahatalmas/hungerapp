@@ -45,7 +45,7 @@ class _OrderPage extends State<OrderPage> {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.all(10),
+             // margin: EdgeInsets.all(10),
               decoration: BoxDecoration(color: Colors.orange[200]),
               child: Column(
                 children: [

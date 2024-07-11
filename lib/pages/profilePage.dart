@@ -100,21 +100,28 @@ class _ProfilePageState extends State<ProfilePage>{
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ClipRRect(
-                                    borderRadius: BorderRadius.circular(50),
-                                    child: _userData!.user_picture != null
-                                        ? Image.network(
-                                            _userData!.user_picture!,
-                                            height: MediaQuery.of(context).size.width*20/100,
-                                            width: MediaQuery.of(context).size.width*20/100,
-                                            fit: BoxFit.cover,
-                                          )
-                                        : Image.asset(
-                                            "assets/anya.jpg",
-                                            height: 100,
-                                            width: 100,
-                                            fit: BoxFit.cover,
-                                          )),
+                                                              Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 4,
+                                          color:
+                                              Color.fromARGB(255, 60, 63, 33)),
+                                      borderRadius: BorderRadius.circular(100)),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: Image.network(
+                                      _userData!.user_picture!,
+                                      width: MediaQuery.of(context).size.width *
+                                          16 /
+                                          100,
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              16 /
+                                              100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )),
+                              
                               ],
                             ),
                           ),
@@ -273,6 +280,7 @@ class _ProfilePageState extends State<ProfilePage>{
                     ),
                     
                     SizedBox(height: 5,),
+                  
                     //list
                     Container(
                       child: ListView.builder(
@@ -280,8 +288,9 @@ class _ProfilePageState extends State<ProfilePage>{
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: tabView == 0 ? getPendingOrders().length:getNotPendingOrders().length,
                       itemBuilder: (context, index) {
-                        Order order = tabView== 0? getPendingOrders()[index]:getNotPendingOrders()[index];
-                        return OrderStatusCard(
+                        Order order = tabView == 0? getPendingOrders()[index]:getNotPendingOrders()[index];
+                        return  
+                        OrderStatusCard(
                           orderId: order.orderId,
                           foodName: order.food.foodName, 
                           foodPicture: order.food.foodPicture, 

@@ -90,32 +90,41 @@ class _EditProfile extends State<EditProfile> {
                       key: _formKey,
                       child: Column(
                         children: [
-                         SizedBox(height: 15,),
-                          
-                          Column(children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(width: 5,color:Color.fromARGB(255, 60, 63, 33)),
-                                borderRadius: BorderRadius.circular(100)
-                              ),
-                            child: 
-                            ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            
-                            child:Image.network(
-                              _userData!.user_picture!,
-                              width: MediaQuery.of(context).size.width*30/100,
-                              height: MediaQuery.of(context).size.width*30/100,
-                              fit: BoxFit.cover,
-                            ), 
-                          )),
-                          Text("Select Image")
-                          ],),
-                         SizedBox(height: 15,),
-                          
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Column(
+                            children: [
+                              Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 5,
+                                          color:
+                                              Color.fromARGB(255, 60, 63, 33)),
+                                      borderRadius: BorderRadius.circular(100)),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: Image.network(
+                                      _userData!.user_picture!,
+                                      width: MediaQuery.of(context).size.width *
+                                          30 /
+                                          100,
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              30 /
+                                              100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )),
+                              Text("Select Image")
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
                           TextFormField(
                             controller: userNameController,
-                            decoration:const InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: "username",
                               floatingLabelBehavior: FloatingLabelBehavior.auto,
                               enabledBorder: const OutlineInputBorder(
@@ -148,10 +157,12 @@ class _EditProfile extends State<EditProfile> {
                                       BorderRadius.all(Radius.circular(10))),
                             ),
                           ),
-                         SizedBox(height: 15,),
-                           TextFormField(
+                          SizedBox(
+                            height: 15,
+                          ),
+                          TextFormField(
                             controller: emailController,
-                            decoration:const InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: "Email",
                               floatingLabelBehavior: FloatingLabelBehavior.auto,
                               enabledBorder: const OutlineInputBorder(
@@ -184,10 +195,12 @@ class _EditProfile extends State<EditProfile> {
                                       BorderRadius.all(Radius.circular(10))),
                             ),
                           ),
-                          SizedBox(height: 15,),
-                           TextFormField(
+                          SizedBox(
+                            height: 15,
+                          ),
+                          TextFormField(
                             controller: contactController,
-                            decoration:const InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: "Contact",
                               floatingLabelBehavior: FloatingLabelBehavior.auto,
                               enabledBorder: const OutlineInputBorder(
@@ -220,10 +233,12 @@ class _EditProfile extends State<EditProfile> {
                                       BorderRadius.all(Radius.circular(10))),
                             ),
                           ),
-                          SizedBox(height: 15,),
-                           TextFormField(
+                          SizedBox(
+                            height: 15,
+                          ),
+                          TextFormField(
                             controller: locationController,
-                            decoration:const InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: "Location",
                               floatingLabelBehavior: FloatingLabelBehavior.auto,
                               enabledBorder: const OutlineInputBorder(
@@ -257,30 +272,44 @@ class _EditProfile extends State<EditProfile> {
                             ),
                           ),
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               final updateres = userAuthProvider.updateUser(
-                                userNameController.text,
-                                emailController.text, 
-                                contactController.text,
-                                _userData!.user_picture!,
-                                locationController.text,
-                                _userData!.user_id
-                              );
-                              updateres.then((response){
-                                 print(userAuthProvider.authData.message);
+                                  userNameController.text,
+                                  emailController.text,
+                                  contactController.text,
+                                  _userData!.user_picture!,
+                                  locationController.text,
+                                  _userData!.user_id);
+                              updateres.then((response) {
+                                print(response.message);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(
+                                    response.message,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  backgroundColor: Colors.brown[800],
+                                  
+                                ));
+                                Navigator.pop(context);
                               });
                             },
                             child: Container(
                               alignment: Alignment.center,
-                              margin: EdgeInsets.symmetric(vertical: 15,horizontal: 0),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 0),
                               padding: EdgeInsets.all(15),
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
-                                color:Color.fromARGB(255, 60, 63, 33),
-                                borderRadius: BorderRadius.circular(15),
-                                border: Border.all(width: 2,color: Color.fromARGB(255, 27, 8, 1))
+                                  color: Color.fromARGB(255, 60, 63, 33),
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(
+                                      width: 2,
+                                      color: Color.fromARGB(255, 27, 8, 1))),
+                              child: Text(
+                                "Update",
+                                style: TextStyle(color: Colors.white),
                               ),
-                              child: Text("Update",style: TextStyle(color: Colors.white),),
                             ),
                           )
                         ],
