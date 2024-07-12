@@ -38,13 +38,14 @@ class MealItemProvider extends ChangeNotifier{
     }
     return totalPrice;
   }
-  void deleteUnique(int index){
-    print(index);
-    notifyListeners();
+  void removeSpecific(int index){
+     mealItems.removeAt(index);
+     notifyListeners();
   }
   void resetList(){
     mealItems.clear();
     notifyListeners();
   }
+
 
 }

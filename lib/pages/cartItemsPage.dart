@@ -160,7 +160,7 @@ class _CartItems extends State<CartItems> {
                                       decQuantity: (){
                                         cartList.subQuantity(index);
                                       }, 
-                                      removeFromCart: ()=>{print("remove")}
+                                      removeFromCart: ()=>{cartList.removeSpecific(index)}
                                     );
                                   }),                              
                               //order button

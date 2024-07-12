@@ -276,7 +276,7 @@ Future<void> _selectDate(BuildContext context) async {
                                             quantity: cartList.mealItems[index].quantity, 
                                             incQuantity: (){cartList.addQuantity(index);},
                                             decQuantity: (){cartList.subQuantity(index);}, 
-                                            removeFromCart:(){print("delete");});
+                                            removeFromCart:(){cartList.removeSpecific(index);});
                                         })),
 
                                 //buttons

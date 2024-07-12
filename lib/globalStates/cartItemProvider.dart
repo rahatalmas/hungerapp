@@ -52,4 +52,8 @@ class CartItemProvider extends ChangeNotifier{
     cartItems.clear();
     notifyListeners();
   }
+  void removeSpecific(int index){
+     cartItems.removeAt(index);
+     notifyListeners();
+  }
 }

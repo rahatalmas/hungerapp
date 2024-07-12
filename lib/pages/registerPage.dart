@@ -146,7 +146,9 @@ class _RegisterPageState extends State<RegisterPage> {
                          print(userAuth.statusCode);
                          print(userAuth.authData.token);
                          print(userAuth.authData.message);
-                         Navigator.pop(context);
+                         if(userAuth.statusCode == 200){
+                          Navigator.pop(context);
+                         }
                         });
                         //print(a);
                         //print(userAuth.statusCode);
