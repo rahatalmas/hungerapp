@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hunger/apiControllers/getUser.dart';
+import 'package:hunger/dataModels/userModel.dart';
 import 'package:hunger/globalStates/cartItemProvider.dart';
+import 'package:hunger/globalStates/userAuthProvider.dart';
 import 'package:hunger/pages/customOrderPage.dart';
 import 'package:hunger/pages/homepage.dart';
 import 'package:hunger/pages/foodpage.dart';
 import 'package:hunger/pages/cartItemsPage.dart';
 import 'package:hunger/pages/profilePage.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 
 class Root extends StatefulWidget {
@@ -14,6 +18,48 @@ class Root extends StatefulWidget {
 }
 
 class _Root extends State<Root> {
+
+  UserModel? _userData;
+  int tabView = 0;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    try {
+      final loginInfoProvider = Provider.of<UserAuthProvider>(context, listen: false);
+      final loginInfo = loginInfoProvider.authData.token;
+      if (loginInfo != null) {
+        Map<String, dynamic> token = JwtDecoder.decode(loginInfo);
+        UserModel user = await getUser(loginInfo, token["user_id"]);
+        setState(() {
+          _userData = user;
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void handleLogout() {
+    final loginInfoProvider =
+        Provider.of<UserAuthProvider>(context, listen: false);
+    loginInfoProvider.logOut();
+  }
+
+
+
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
     const MyHomePage(title: 'Hunger'),
@@ -30,6 +76,7 @@ class _Root extends State<Root> {
   @override
   Widget build(BuildContext context) {
     final cartInfo = Provider.of<CartItemProvider>(context);
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange[300],
@@ -99,69 +146,23 @@ class _Root extends State<Root> {
                   const SizedBox(
                     height: 7,
                   ),
-                  Text("Pretty Dey"),
-                  Text("Daffodil International University"),
+                  Text("${_userData?.user_name}"),
+                  Text("${_userData?.user_location}"),
                 ],
               ),
             ),
             ListTile(
               title: const Row(
                 children: [
-                  Icon(Icons.info),
+                  Icon(Icons.exit_to_app),
                   SizedBox(
                     width: 10,
                   ),
-                  Text("About")
+                  Text("Logout")
                 ],
               ),
               onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            ListTile(
-              title: const Row(
-                children: [
-                  Icon(Icons.settings),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text("settings")
-                ],
-              ),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            ListTile(
-              title: const Row(
-                children: [
-                  Icon(Icons.privacy_tip),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text("Privacy")
-                ],
-              ),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            ListTile(
-              title: const Row(
-                children: [
-                  Icon(Icons.developer_board),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text("Developers")
-                ],
-              ),
-              onTap: () {
-                // Update the state of the app.
-                // ...
+                handleLogout();
               },
             ),
           ],
