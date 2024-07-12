@@ -54,20 +54,24 @@ class _CustomOrderPage extends State<CustomOrderPage> {
     }
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2024, DateTime.now().day),
-      lastDate: DateTime(2024, DateTime.now().day + 30),
-    );
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-      });
-    }
-  }
+Future<void> _selectDate(BuildContext context) async {
+  final DateTime initialDate = selectedDate;
+  final DateTime firstDate = DateTime.now();
+  final DateTime lastDate = DateTime.now().add(Duration(days: 30));
 
+  final DateTime? picked = await showDatePicker(
+    context: context,
+    initialDate: initialDate,
+    firstDate: firstDate,
+    lastDate: lastDate,
+  );
+
+  if (picked != null && picked != selectedDate) {
+    setState(() {
+      selectedDate = picked;
+    });
+  }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -376,203 +380,3 @@ class _CustomOrderPage extends State<CustomOrderPage> {
   }
 }
 
-
-/**
- * 
- * Container(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              padding: EdgeInsets.all(10),
-                                              margin: EdgeInsets.symmetric(
-                                                  vertical: 5, horizontal: 0),
-                                              decoration: BoxDecoration(
-                                                  color: Colors.orange[300],
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        child: Image.network(
-                                                            '${cartList.mealItems[index].food_model.foodPicture}',
-                                                            height: 70,
-                                                            width: 100,
-                                                            fit: BoxFit.cover,
-                                                            alignment: Alignment
-                                                                .center),
-                                                      ),
-                                                      Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            cartList
-                                                                .mealItems[
-                                                                    index]
-                                                                .food_model
-                                                                .foodName,
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .brown[700],
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                fontSize: 15),
-                                                          ),
-                                                          Text(
-                                                              cartList
-                                                                  .mealItems[
-                                                                      index]
-                                                                  .food_model
-                                                                  .foodProvider
-                                                                  .hotelName,
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                          .brown[
-                                                                      700],
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontSize:
-                                                                      13)),
-                                                          Text("MealType: ${cartList.mealItems[index].food_model.foodCategory}",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                          .brown[
-                                                                      700],
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontSize:
-                                                                      13)),
-                                                          Text("Date: ${cartList.mealItems[index].date.day.toString()}",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                          .brown[
-                                                                      700],
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontSize: 13))
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      InkWell(
-                                                        onTap: () {
-                                                          cartList.subQuantity(
-                                                              index);
-                                                        },
-                                                        child: Container(
-                                                          padding:
-                                                              EdgeInsets.all(5),
-                                                          decoration: BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                              color: Colors
-                                                                  .orange[100]),
-                                                          child: Icon(
-                                                            Icons.remove,
-                                                            size: 20,
-                                                            weight: 500,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      Text(
-                                                          '${cartList.mealItems[index].quantity}',
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .brown[700],
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                              fontSize: 20)),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          cartList.addQuantity(
-                                                              index);
-                                                        },
-                                                        child: Container(
-                                                          padding:
-                                                              EdgeInsets.all(5),
-                                                          decoration: BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                              color: Colors
-                                                                  .orange[100]),
-                                                          child:const Icon(
-                                                            Icons.add,
-                                                            size: 20,
-                                                            weight: 500,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Column(
-                                                    children: [
-                                                      Text(
-                                                        "Price",
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .brown[700],
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        '${cartList.mealItems[index].food_model.foodPrice}x${cartList.mealItems[index].quantity}',
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .brown[700],
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        '${cartList.mealItems[index].food_model.foodPrice * cartList.mealItems[index].quantity}',
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .brown[700],
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ));
-                                        
- * 
- */

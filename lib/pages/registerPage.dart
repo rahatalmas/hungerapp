@@ -146,6 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
                          print(userAuth.statusCode);
                          print(userAuth.authData.token);
                          print(userAuth.authData.message);
+                         Navigator.pop(context);
                         });
                         //print(a);
                         //print(userAuth.statusCode);
@@ -178,7 +179,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     InkWell(
                       onTap: () {
-                        print(userAuth.isLoading);
+                        Navigator.pop(context);
                       },
                       child: Text(
                         "Login",
