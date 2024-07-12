@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:hunger/dataModels/orderModel.dart';
+import 'package:hunger/url.dart';
 
 Future<void> postOrder(OrderPost order) async {
-  final url = Uri.parse("http://192.168.0.116:5000/order");
+  final url = Uri.parse("http://$baseUrl/order");
 
   try {
     final response = await http.post(
@@ -25,7 +26,7 @@ Future<void> postOrder(OrderPost order) async {
 }
 
 Future<List<Order>> fetchOrdersByUserId(int userId) async {
-  final url = Uri.parse('http://192.168.0.116:5000/order/$userId');
+  final url = Uri.parse('http://$baseUrl/order/$userId');
 
   final response = await http.get(url);
 
@@ -40,7 +41,7 @@ Future<List<Order>> fetchOrdersByUserId(int userId) async {
 }
 
 Future<void> updateOrderStatus(int orderId, bool orderStatus) async {
-  final url = Uri.parse('http://192.168.0.116:5000/order/update');
+  final url = Uri.parse('http://$baseUrl/order/update');
   final response = await http.put(
     url,
     headers: <String, String>{

@@ -2,9 +2,10 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:hunger/dataModels/foodModel.dart';
+import 'package:hunger/url.dart';
 
 Future<List<FoodModel>> getFoods() async{
-  String url = "http://192.168.0.116:5000/food/allfoods";
+  String url = "http://$baseUrl/food/allfoods";
   final response = await http.get(Uri.parse(url));
   //List<FoodModel> foodList = [];
   if(response.statusCode == 200){

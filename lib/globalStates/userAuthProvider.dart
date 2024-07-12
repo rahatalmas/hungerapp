@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:hunger/dataModels/user.dart';
+import 'package:hunger/url.dart';
 
 class UserAuthProvider with ChangeNotifier{
   UserAuth authData = UserAuth();
@@ -29,7 +30,7 @@ class UserAuthProvider with ChangeNotifier{
       "user_location":userLocation.trim()
     };
     return await post(
-      Uri.parse("http://192.168.0.116:5000/user/register"),
+      Uri.parse("http://$baseUrl/user/register"),
       body: jsonEncode(registrationData),
       headers: {
           'Content-Type': 'application/json',
@@ -48,7 +49,7 @@ class UserAuthProvider with ChangeNotifier{
     };
 
     return await post(
-      Uri.parse("http://192.168.0.116:5000/user/login"),
+      Uri.parse("http://$baseUrl/user/login"),
       body:jsonEncode(loginData),
       headers: {
         'content-Type' : 'application/json'
@@ -75,7 +76,7 @@ class UserAuthProvider with ChangeNotifier{
       "user_location":userLocation.trim()
     };
     final response = await put(
-      Uri.parse("http://192.168.0.116:5000/user/update/$userId"),
+      Uri.parse("http://$baseUrl/user/update/$userId"),
       body: jsonEncode(updateData),
       headers: {
           'Content-Type': 'application/json',
